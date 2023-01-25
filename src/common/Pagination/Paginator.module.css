@@ -1,0 +1,10 @@
+.item {
+    display: inline-block;
+    background-color: #eacaa7;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.item.active {
+    color: red;
+}

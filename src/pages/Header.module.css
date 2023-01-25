@@ -1,0 +1,20 @@
+.nav_ul {
+    display: grid;
+    grid-template-columns: repeat(2, 80px);
+    list-style-type: none;
+}
+
+.nav_ul a {
+    color: #c26c2b;
+    font-size: 20px;
+    font-family: Arial;
+    text-decoration: none;
+}
+
+.header {
+    background-color: #eacaa7;
+    height: 50px;
+    padding: 10px;
+    box-shadow: #9a7c5c 0px 3px 7px;
+    margin-bottom: 20px;
+}
