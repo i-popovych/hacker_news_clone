@@ -10,6 +10,7 @@ const NewsItem = ({_id, title, countLike, authorName, countComment, linkTitle, .
             <div className={s.authorName}>authorName: {authorName}</div>
             <div className={s.countComment}>countComment: {countComment}</div>
             <div className={s.linkTitle}>linkTitle: {linkTitle}</div>
+            {props.addNews && <button className={s.sendButton} onClick={() => props.addNews(_id)}>send</button>}
         </article>
     );
 };

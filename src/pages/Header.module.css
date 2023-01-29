@@ -17,4 +17,21 @@
     padding: 10px;
     box-shadow: #9a7c5c 0px 3px 7px;
     margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.authInfo {
+    grid-column-start: 3;
+    margin-right: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+}
+
+.authInfo a {
+    color: #253983;
+    font-size: 20px;
+    font-family: Arial;
+    text-decoration: none;
 }

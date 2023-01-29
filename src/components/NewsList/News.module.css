@@ -3,8 +3,8 @@
     background-color: #d58b56;
     padding: 17px;
     grid-template-areas:
-        'id title linkTitle'
-        'countLike authorName countComment';
+        'id title linkTitle sendButton'
+        'countLike authorName countComment sendButton';
     border-radius: 30px;
     box-shadow: #624d3e 2px 2px 3px;
 }
@@ -28,9 +28,14 @@
     grid-area: linkTitle;
 }
 
+.sendButton {
+    grid-area: sendButton
+}
+
 .newsList {
     display: grid;
     grid-row-gap: 17px;
     width: 85%;
     margin: auto;
 }
+

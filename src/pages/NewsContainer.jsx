@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
     getCurrentNewsData,
     getLoadingStatus,
@@ -17,45 +17,18 @@ import {
     setCurrentNewsDataPage,
     setSearchingStatus
 } from "../redux/newsReducer";
-import MySelect from "../UI/MySelect";
 import Preloader from "../common/Preloader/Preloader";
 import Pagination from "../common/Pagination/Pagination";
-import {useSelect} from "../hook/form";
+import {useSearch} from "../hook/form";
+import NewsForm from "../components/NewsForm/NewsForm";
 
 const News = ({addNews, isSearching, ...props}) => {
-    const [pressedSelectNewsCount, setPressedSelectNewsCount] = useState(props.currentNewsData.limit);
-    const [searchInp, setSearchInp] = useState("");
-
-    const [pressedSelect, setPressedSelect] = useSelect(props.filterNews);
-
-
-    useEffect(() => {
-        if(searchInp) {
-            props.setSearchingStatus(true);
-            props.searchNews(searchInp);
-        } else props.setSearchingStatus(false);
-    }, [searchInp])
-
-    useEffect(() => {
-        props.setCurrentNewsDataLimit(pressedSelectNewsCount)
-    }, [pressedSelectNewsCount])
+    const [searchInp, setSearchInp, loadingSearch] = useSearch(props.searchNews);
 
     return (
         <div>
-            <input type="text" value={searchInp}
-                   onChange={e => setSearchInp(e.target.value)} placeholder={"enter search input"}/>
-            <MySelect value={pressedSelectNewsCount} defaultValue={"enter news count"} selectChange={setPressedSelectNewsCount}
-                      options={[
-                          {value: '5', name: '5'},
-                          {value: '10', name: '10'},
-                          {value: '15', name: '15'},
-                      ]}/>
-            <MySelect value={pressedSelect} defaultValue={"enter whatever"} selectChange={setPressedSelect}
-                      options={[
-                          {value: '_id', name: 'filter by id'},
-                          {value: 'title', name: 'filter by title'},
-                      ]}/>
-            {isSearching ? <NewsList newsList={props.searchNewsArr}/> : <NewsList newsList={props.newsList}/>}
+            <NewsForm searchInp={searchInp} setSearchInp={setSearchInp}{...props}/>
+            {loadingSearch ? <NewsList newsList={props.searchNewsArr}/> : <NewsList newsList={props.newsList}/>}
             <Pagination onChangePage={props.setCurrentNewsDataPage}
                 currentPage={props.currentNewsData.page} countItems={props.totalCount} limit={props.currentNewsData.limit}/>
         </div>
@@ -68,9 +41,8 @@ const NewsContainer = ({fetchNews, isLoading, ...props}) => {
             await fetchNews(props.currentNewsData.page, props.currentNewsData.limit)
         })()
     }, [props.currentNewsData.page, props.currentNewsData.limit])
-    return (
-        <News {...props}/>
-    )
+
+    return isLoading ? <Preloader/> : <News {...props}/>
 }
 
 const mapStateToProps = state => {

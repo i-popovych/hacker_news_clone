@@ -1,4 +1,5 @@
 import {NewsAPI} from "../api/news";
+import profileAPI from "../api/profle";
 
 const SET_NEWS = './newsReducer/SET_NEWS'
 const FILTER_NEWS = './newsReducer/FILTER_NEWS'
@@ -85,6 +86,15 @@ export const setLoadStatus = (bool) => ({type: SET_lOAD_STATUS, bool});
 export const setTotalCount = (num) => ({type: SET_TOTAL_COUNT, num});
 export const setCurrentNewsDataPage = (page) => ({type: SET_CURRENT_NEWS_DATA_PAGE, page});
 export const setCurrentNewsDataLimit = (limit) => ({type: SET_CURRENT_NEWS_DATA_LIMIT, limit});
+
+export const addNews = id => async dispatch => {
+    try {
+        const res = await profileAPI.addNews(id)
+        console.log(res)
+    } catch (e) {
+        console.log(e.response.data.message)
+    }
+}
 
 export const fetchNews = (page, limit) => async (dispatch) => {
     dispatch(setLoadStatus(true));
