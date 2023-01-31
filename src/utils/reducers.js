@@ -1,0 +1,1 @@
+export const filterWithoutId = (arr, id) => arr.filter(i => i !== id)
