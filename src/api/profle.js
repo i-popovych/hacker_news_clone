@@ -2,11 +2,14 @@ import {instanse} from "./news";
 
 const profileAPI = {
     addNews: async (newsId) => {
-            return await instanse.post('add_news', {
-                newsId
-            },{
+            return await instanse.post('add_news', {newsId}, {
                 headers: { authorization:`Barer ${localStorage.getItem('token')}` }
             });
+    },
+    deleteNews: async (newsId) => {
+        return await instanse.delete(`delete_news?newsId=${newsId}`, {
+            headers: { authorization:`Barer ${localStorage.getItem('token')}` }
+        });
     },
     getSavedNews: async () => {
         try {

@@ -3,10 +3,12 @@ import newsReducer from "./newsReducer";
 import thunkMiddleware from "redux-thunk"
 import authReducer from "./authReducer";
 import {composeWithDevTools } from 'redux-devtools-extension'
+import profileReducer from "./profileReducer";
 
 let reducers = combineReducers({
     news: newsReducer,
-    auth: authReducer
+    auth: authReducer,
+    profile: profileReducer
 })
 
 let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));

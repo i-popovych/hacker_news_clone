@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 import s from "./News.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import NewsItemInfo from "./NewsItemInfo";
+import {getSavedNewsId} from "../../selectors/profile";
+import {addNews, fetchSavedNews} from "../../redux/profileReducer";
 
-const NewsItem = ({_id, title, countLike, authorName, countComment, linkTitle, ...props}) => {
+const NewsItem = (props) => {
+    const dispatch = useDispatch();
+    const savedNewsId = useSelector(state => getSavedNewsId(state));
+
+    const onAdd = e => {
+        e.preventDefault();
+        dispatch(addNews(props._id));
+    }
+    const checkHave = (arr, id) => {
+        console.log('check have')
+        return arr.includes(id);
+    }
+
+    let isHave = useMemo(() => checkHave(savedNewsId, props._id), [savedNewsId])
     return (
         <article className={s.item}>
-            <div className={s.id}>id: {_id}</div>
-            <div className={s.title}>title: {title}</div>
-            <div className={s.countLike}>countLike: {countLike}</div>
-            <div className={s.authorName}>authorName: {authorName}</div>
-            <div className={s.countComment}>countComment: {countComment}</div>
-            <div className={s.linkTitle}>linkTitle: {linkTitle}</div>
-            {props.addNews && <button className={s.sendButton} onClick={() => props.addNews(_id)}>send</button>}
+            <NewsItemInfo {...props}/>
+            {!isHave && <button className={s.sendButton} onClick={onAdd}>send</button>}
         </article>
     );
 };

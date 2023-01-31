@@ -21,13 +21,14 @@ import Preloader from "../common/Preloader/Preloader";
 import Pagination from "../common/Pagination/Pagination";
 import {useSearch} from "../hook/form";
 import NewsForm from "../components/NewsForm/NewsForm";
+import {WithSendButton} from "../hok/NewsItem";
 
 const News = ({addNews, isSearching, ...props}) => {
     const [searchInp, setSearchInp, loadingSearch] = useSearch(props.searchNews);
 
     return (
         <div>
-            <NewsForm searchInp={searchInp} setSearchInp={setSearchInp}{...props}/>
+            <NewsForm searchInp={searchInp} setSearchInp={setSearchInp} {...props}/>
             {loadingSearch ? <NewsList newsList={props.searchNewsArr}/> : <NewsList newsList={props.newsList}/>}
             <Pagination onChangePage={props.setCurrentNewsDataPage}
                 currentPage={props.currentNewsData.page} countItems={props.totalCount} limit={props.currentNewsData.limit}/>
@@ -41,8 +42,9 @@ const NewsContainer = ({fetchNews, isLoading, ...props}) => {
             await fetchNews(props.currentNewsData.page, props.currentNewsData.limit)
         })()
     }, [props.currentNewsData.page, props.currentNewsData.limit])
+    return <News {...props}/>
 
-    return isLoading ? <Preloader/> : <News {...props}/>
+    // return isLoading ? <Preloader/> : <News {...props}/>
 }
 
 const mapStateToProps = state => {

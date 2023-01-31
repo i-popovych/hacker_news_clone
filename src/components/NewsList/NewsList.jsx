@@ -1,18 +1,19 @@
 import React from 'react';
-import NewsItem from "./NewsItem";
 import s from "./News.module.css"
 import NotFound from "../NotFound";
-import {compose} from "redux";
-import {WithSendButton} from "../../hok/NewsItem";
+import NewsProfileItem from "./NewsProfileItem";
+import NewsItem from "./NewsItem";
 
-const NewsList = ({newsList}) => {
+const NewsList = ({newsList, ...props}) => {
     if(!newsList.length) return <NotFound/>
+    let site = window.location.href.split('/').at(-1)
+    let Item = site === 'profile' ? NewsProfileItem : NewsItem
+
     return (
         <section className={s.newsList}>
             {
                 newsList.map(i => {
-                    let Temp = compose(WithSendButton)(NewsItem)
-                    return <Temp key={i._id} {...i}/>
+                    return <Item key={i._id} {...i} {...props}/>
                 })
             }
         </section>

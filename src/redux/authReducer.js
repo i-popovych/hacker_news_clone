@@ -28,9 +28,14 @@ export const setAuthStatus = bool => ({type: SET_AUTH_STATUS, bool})
 export const initializeApp = () => ({type: INITIALIZE_APP})
 
 export const checkAuth = () => async dispatch => {
-    const res = await authAPI.getAuthStatus();
-    dispatch(initializeApp());
-    dispatch(setAuthStatus(res));
+    try {
+        const res = await authAPI.getAuthStatus();
+        dispatch(initializeApp());
+        dispatch(setCurrentUser(res.data.user));
+        dispatch(setAuthStatus(true));
+    } catch (e) {
+        dispatch(setAuthStatus(false))
+    }
 }
 
 export const login = (username, password) => async dispatch => {
@@ -51,8 +56,6 @@ export const logout = () => async dispatch => {
     dispatch(deleteCurrentUser());
     dispatch(setAuthStatus(false));
 }
-
-
 
 
 export default authReducer;

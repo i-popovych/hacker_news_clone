@@ -1,5 +1,4 @@
 import {NewsAPI} from "../api/news";
-import profileAPI from "../api/profle";
 
 const SET_NEWS = './newsReducer/SET_NEWS'
 const FILTER_NEWS = './newsReducer/FILTER_NEWS'
@@ -25,42 +24,24 @@ const initialState = {
 
 const newsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_NEWS: {
-            return {
-                ...state,
-                newsArr: action.data
-            }
-        }
+        case SET_NEWS: return {...state, newsArr: action.data}
         case FILTER_NEWS: {
             return {
                 ...state,
                 newsArr: [...state.newsArr].sort((a, b) => a[action.value].localeCompare(b[action.value]))
             }
         }
+
         case SEARCH_NEWS: {
             return {
                 ...state,
                 searchNewsArr: [...state.newsArr].filter(i => i.title.includes(action.value))
             }
         }
-        case SET_SEARCHING_STATUS: {
-            return {
-                ...state,
-                isSearching: action.bool
-            }
-        }
-        case SET_lOAD_STATUS: {
-            return {
-                ...state,
-                isLoading: action.bool
-            }
-        }
-        case SET_TOTAL_COUNT: {
-            return {
-                ...state,
-                totalCount: action.num
-            }
-        }
+        case SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}
+        case SET_lOAD_STATUS: return {...state, isLoading: action.bool}
+        case SET_TOTAL_COUNT: return {...state, totalCount: action.num}
+
         case SET_CURRENT_NEWS_DATA_PAGE: {
             return {
                 ...state,
@@ -73,8 +54,7 @@ const newsReducer = (state = initialState, action) => {
                 currentNewsData: {...state.currentNewsData, limit: action.limit}
             }
         }
-        default:
-            return state;
+        default: return state;
     }
 }
 
@@ -87,14 +67,6 @@ export const setTotalCount = (num) => ({type: SET_TOTAL_COUNT, num});
 export const setCurrentNewsDataPage = (page) => ({type: SET_CURRENT_NEWS_DATA_PAGE, page});
 export const setCurrentNewsDataLimit = (limit) => ({type: SET_CURRENT_NEWS_DATA_LIMIT, limit});
 
-export const addNews = id => async dispatch => {
-    try {
-        const res = await profileAPI.addNews(id)
-        console.log(res)
-    } catch (e) {
-        console.log(e.response.data.message)
-    }
-}
 
 export const fetchNews = (page, limit) => async (dispatch) => {
     dispatch(setLoadStatus(true));
