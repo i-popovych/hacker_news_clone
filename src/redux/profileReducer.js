@@ -1,26 +1,26 @@
 import profileAPI from "../api/profle";
-import {filterWithoutId} from "../utils/reducers";
+import {filterWithoutId, savedNewsWithoutId} from "../utils/reducers";
 
 const SAVED_NEWS = 'profileReducer/SAVED_NEWS'
 const SAVED_NEWS_ID = 'profileReducer/SAVED_NEWS_ID'
 const SET_LOADING_STATUS = 'profileReducer/SET_LOADING_STATUS'
-const ADD_LOADING_NEWS_ID = 'profileReducer/ADD_LOADING_NEWS_ID'
-const DELETE_LOADING_NEWS_ID = 'profileReducer/DELETE_LOADING_NEWS_ID'
+const DELETE_SAVED_NEWS = 'profileReducer/DELETE_SAVED_NEWS'
+const DELETE_SAVED_NEWS_ID = 'profileReducer/DELETE_SAVED_NEWS_ID'
+const ADD_SAVED_NEWS = 'profileReducer/ADD_SAVED_NEWS'
 
 const initialState = {
     savedNewsId: [],
-    loadingSavedNewsId: [],
-    savedNews: null,
+    savedNews: [],
     isLoading: true
 }
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case SAVED_NEWS: return {...state, savedNews: [...action.newsArr]}
+        case ADD_SAVED_NEWS: return {...state, savedNews: [...state.savedNews, action.news]}
         case SAVED_NEWS_ID: return {...state, savedNewsId: [...state.savedNewsId, ...action.newsIdArr]}
-        case ADD_LOADING_NEWS_ID: return {...state, loadingSavedNewsId: [...state.loadingSavedNewsId, action.newsId]}
-        case DELETE_LOADING_NEWS_ID:
-            return {...state, loadingSavedNewsId: filterWithoutId(state.loadingSavedNewsId, action.newsId)}
+        case DELETE_SAVED_NEWS: return {...state, savedNews: savedNewsWithoutId(state.savedNews, action.newsId)}
+        case DELETE_SAVED_NEWS_ID: return {...state, savedNewsId: filterWithoutId(state.savedNewsId, action.newsId)}
         case SET_LOADING_STATUS: return {...state, isLoading: action.bool}
 
         default: return state;
@@ -30,16 +30,18 @@ const profileReducer = (state = initialState, action) => {
 export const setSavedNews = newsArr => ({type: SAVED_NEWS, newsArr});
 export const setSavedIdNews = newsIdArr => ({type: SAVED_NEWS_ID, newsIdArr});
 export const setLoadingStatus = bool => ({type: SET_LOADING_STATUS, bool})
-export const addLoadingNews = newsId => ({type: ADD_LOADING_NEWS_ID, newsId})
-export const deleteLoadingNews = newsId => ({type: DELETE_LOADING_NEWS_ID, newsId})
+export const deleteSavedNews = newsId => ({type: DELETE_SAVED_NEWS, newsId})
+export const deleteSavedNewsId = newsId => ({type: DELETE_SAVED_NEWS_ID, newsId})
+export const addSavedNews = news => ({type: ADD_SAVED_NEWS, news})
 
 export const addNews = id => async dispatch => {
     try {
         dispatch(setLoadingStatus(true));
-        dispatch(addLoadingNews(id));
         const res = await profileAPI.addNews(id);
-        if(res.status === 200) dispatch(setSavedIdNews([id]))
-        dispatch(deleteLoadingNews(id))
+        if(res.status === 200) {
+            dispatch(setSavedIdNews([id]))
+            dispatch(addSavedNews(res.data.news))
+        }
         dispatch(setLoadingStatus(false))
     } catch (e) {
         console.log(e.response.data.message)
@@ -48,10 +50,11 @@ export const addNews = id => async dispatch => {
 
 export const deleteNews = id => async dispatch => {
     try {
-        dispatch(setLoadingStatus(true));
         const res = await profileAPI.deleteNews(id);
-        dispatch(fetchSavedNews());
-        dispatch(setLoadingStatus(false))
+        if(res.status === 200) {
+            dispatch(deleteSavedNews(id));
+            dispatch(deleteSavedNewsId(id))
+        }
     } catch (e) {
         console.log(e)
     }

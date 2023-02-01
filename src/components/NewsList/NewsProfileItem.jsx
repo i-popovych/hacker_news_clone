@@ -14,7 +14,7 @@ const NewsProfileItem = (props) => {
     return (
         <article className={s.item}>
             <NewsItemInfo {...props}/>
-            <button className={s.sendButton} onClick={(e) => onDelete(e)}>delete</button>
+            <button className={s.sendButton} onClick={onDelete}>delete</button>
         </article>
     );
 };
