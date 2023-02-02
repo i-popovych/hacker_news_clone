@@ -5,3 +5,4 @@ export const checkAuth = state => {
 export const checkInitialize = state => state.auth.isInitial
 
 export const getUserName = state => state.auth.currentUser.username
+export const getCurrentUser = state => state.auth.currentUser

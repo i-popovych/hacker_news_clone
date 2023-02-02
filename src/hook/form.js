@@ -14,7 +14,7 @@ export const useSearch = (callback) => {
     useEffect(() => {
         if(searchInp) {
             setLoading(true);
-            callback(searchInp);
+            callback ? callback(searchInp) : setSearchInp(searchInp);
         } else setLoading(false)
     }, [searchInp])
     return [searchInp, setSearchInp, loading];
