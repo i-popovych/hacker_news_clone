@@ -4,7 +4,7 @@ import {getSavedNewsId} from "../selectors/profile";
 
 export const WithSendButton = Children => {
     const dispatch = useDispatch();
-    const savedNewsId = useSelector(state => getSavedNewsId(state));
+    const savedNewsId = useSelector(getSavedNewsId);
     const onAddNewsClick = id => {
         dispatch(addNews(id));
     }

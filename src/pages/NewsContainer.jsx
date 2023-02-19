@@ -19,10 +19,8 @@ import {
 } from "../redux/newsReducer";
 import Preloader from "../common/Preloader/Preloader";
 import Pagination from "../common/Pagination/Pagination";
-import {useSearch} from "../hook/form";
+import {useSearch} from "../hooks/form";
 import NewsForm from "../components/NewsForm/NewsForm";
-import {useLocation, useParams} from "react-router";
-import {useSearchParams} from "react-router-dom";
 
 const News = ({addNews, isSearching, ...props}) => {
     const [searchInp, setSearchInp, loadingSearch] = useSearch(props.searchNews);
@@ -37,22 +35,11 @@ const News = ({addNews, isSearching, ...props}) => {
 };
 
 const NewsContainer = ({fetchNews, isLoading, ...props}) => {
-    const search = useLocation().search;
-    const page = new URLSearchParams(search).get('page');
-    const limit = new URLSearchParams(search).get('limit');
-
-    // debugger;
-    // useEffect(() => {
-    //     (async function() {
-    //         await fetchNews(props.currentNewsData.page, props.currentNewsData.limit)
-    //     })()
-    // }, [props.currentNewsData.page, props.currentNewsData.limit])
     useEffect(() => {
         (async function() {
-            console.log('sfd')
-            await fetchNews(page, limit)
+            await fetchNews(props.currentNewsData.page, props.currentNewsData.limit)
         })()
-    }, [page, limit])
+    }, [props.currentNewsData.page, props.currentNewsData.limit])
 
     return isLoading ? <Preloader/> : <News {...props}/>
 }

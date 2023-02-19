@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import cn from "classnames";
 import s from "./Paginator.module.css"
 import {getPagesCount, setArrPage} from "../../utils/utils";
-import {usePageCount} from "../../hook/usePageCount";
+import {usePageCount} from "../../hooks/usePageCount";
 
 const Pagination = ({countItems, currentPage, onChangePage, limit}) => {
     const pagesCount = usePageCount(countItems, limit);

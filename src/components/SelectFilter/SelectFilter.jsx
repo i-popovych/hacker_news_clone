@@ -1,6 +1,6 @@
 import React from 'react';
 import MySelect from "../../UI/MySelect";
-import {useSelect} from "../../hook/form";
+import {useSelect} from "../../hooks/form";
 
 const SelectFilter = ({filterNews}) => {
     const [pressedSelect, setPressedSelect] = useSelect(filterNews);

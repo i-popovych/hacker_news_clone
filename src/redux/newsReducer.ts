@@ -1,5 +1,6 @@
 import {NewsAPI} from "../api/news";
 
+
 const SET_NEWS = './newsReducer/SET_NEWS'
 const FILTER_NEWS = './newsReducer/FILTER_NEWS'
 const SEARCH_NEWS = './newsReducer/SEARCH_NEWS'
@@ -22,20 +23,20 @@ const initialState = {
     }
 }
 
-const newsReducer = (state = initialState, action) => {
+const newsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SET_NEWS: return {...state, newsArr: action.data}
         case FILTER_NEWS: {
             return {
                 ...state,
-                newsArr: [...state.newsArr].sort((a, b) => a[action.value].localeCompare(b[action.value]))
+                newsArr: [...state.newsArr].sort((a: any, b: any) => a[action.value].localeCompare(b[action.value]))
             }
         }
 
         case SEARCH_NEWS: {
             return {
                 ...state,
-                searchNewsArr: [...state.newsArr].filter(i => i.title.includes(action.value))
+                searchNewsArr: [...state.newsArr].filter((i: any) => i.title.includes(action.value))
             }
         }
         case SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}
@@ -58,21 +59,21 @@ const newsReducer = (state = initialState, action) => {
     }
 }
 
-export const setNews = (data) => ({type: SET_NEWS, data});
-export const filterNews = (value) => ({type: FILTER_NEWS, value});
-export const searchNews = (value) => ({type: SEARCH_NEWS, value});
-export const setSearchingStatus = (bool) => ({type: SET_SEARCHING_STATUS, bool});
-export const setLoadStatus = (bool) => ({type: SET_lOAD_STATUS, bool});
-export const setTotalCount = (num) => ({type: SET_TOTAL_COUNT, num});
-export const setCurrentNewsDataPage = (page) => ({type: SET_CURRENT_NEWS_DATA_PAGE, page});
-export const setCurrentNewsDataLimit = (limit) => ({type: SET_CURRENT_NEWS_DATA_LIMIT, limit});
+export const setNews = (data: any) => ({type: SET_NEWS, data});
+export const filterNews = (value: string) => ({type: FILTER_NEWS, value});
+export const searchNews = (value: string) => ({type: SEARCH_NEWS, value});
+export const setSearchingStatus = (bool: boolean) => ({type: SET_SEARCHING_STATUS, bool});
+export const setLoadStatus = (bool: boolean) => ({type: SET_lOAD_STATUS, bool});
+export const setTotalCount = (num: number) => ({type: SET_TOTAL_COUNT, num});
+export const setCurrentNewsDataPage = (page: any) => ({type: SET_CURRENT_NEWS_DATA_PAGE, page});
+export const setCurrentNewsDataLimit = (limit: any) => ({type: SET_CURRENT_NEWS_DATA_LIMIT, limit});
 
 
-export const fetchNews = (page, limit) => async (dispatch) => {
+export const fetchNews = (page: any, limit: any) => async (dispatch: any) => {
     dispatch(setLoadStatus(true));
-    const res = await NewsAPI.getNews(page, limit);
-    dispatch(setNews(res.items));
-    dispatch(setTotalCount(res.totalCount));
+    const data = await NewsAPI.getNews(page, limit);
+    dispatch(setNews(data.items));
+    dispatch(setTotalCount(data.totalCount));
     dispatch(setLoadStatus(false));
 }
 

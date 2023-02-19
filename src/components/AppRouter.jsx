@@ -5,7 +5,7 @@ import {checkAuth} from "../selectors/auth";
 import {useSelector} from "react-redux";
 
 const AppRouter = () => {
-    let isAuth = useSelector(state => checkAuth(state));
+    let isAuth = useSelector(checkAuth);
     return ( isAuth ?
             <Routes>
                 {privateRoutes.map(i => {

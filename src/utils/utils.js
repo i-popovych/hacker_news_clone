@@ -5,3 +5,8 @@ export const setArrPage = (totalPage) => {
     for(let i = 1; i <= totalPage; i++) pages.push(i);
     return pages;
 }
+
+export const sortByStr = (arr, str) => {
+    console.log('sort')
+    return arr.sort((a, b) => a[str].localeCompare(b[str]))
+}

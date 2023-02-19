@@ -1,18 +1,20 @@
 import {useDispatch, useSelector} from "react-redux";
-import {checkAuth} from "../redux/authReducer";
 import {fetchSavedNews} from "../redux/profileReducer";
 import {useEffect, useState} from "react";
-import {getCurrentUser, getUserName} from "../selectors/auth";
+import {getUserName} from "../selectors/auth";
+import {useActions} from "./useActions";
 
 
 export const useInitialize = () => {
     const dispatch = useDispatch();
-    const currentUsername = useSelector(state => getUserName(state))
+    const currentUsername = useSelector(getUserName)
     const [isInitialize, setIsInitialize] = useState(false);
+
+    const {authThunk} = useActions();
     useEffect(() => {
         console.log('initialize')
         const fetchData = async () => {
-            await dispatch(checkAuth());
+            await authThunk.checkAuth()
             await dispatch(fetchSavedNews())
             setIsInitialize(true);
         }

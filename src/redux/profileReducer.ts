@@ -14,7 +14,7 @@ const initialState = {
     isLoading: true
 }
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SAVED_NEWS: return {...state, savedNews: [...action.newsArr]}
         case ADD_SAVED_NEWS: return {...state, savedNews: [...state.savedNews, action.news]}
@@ -27,14 +27,14 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const setSavedNews = newsArr => ({type: SAVED_NEWS, newsArr});
-export const setSavedIdNews = newsIdArr => ({type: SAVED_NEWS_ID, newsIdArr});
-export const setLoadingStatus = bool => ({type: SET_LOADING_STATUS, bool})
-export const deleteSavedNews = newsId => ({type: DELETE_SAVED_NEWS, newsId})
-export const deleteSavedNewsId = newsId => ({type: DELETE_SAVED_NEWS_ID, newsId})
-export const addSavedNews = news => ({type: ADD_SAVED_NEWS, news})
+export const setSavedNews = (newsArr: any) => ({type: SAVED_NEWS, newsArr});
+export const setSavedIdNews = (newsIdArr: any) => ({type: SAVED_NEWS_ID, newsIdArr});
+export const setLoadingStatus = (bool: boolean) => ({type: SET_LOADING_STATUS, bool})
+export const deleteSavedNews = (newsId: string) => ({type: DELETE_SAVED_NEWS, newsId})
+export const deleteSavedNewsId = (newsId: string) => ({type: DELETE_SAVED_NEWS_ID, newsId})
+export const addSavedNews = (news: any) => ({type: ADD_SAVED_NEWS, news})
 
-export const addNews = id => async dispatch => {
+export const addNews = (id: any) => async (dispatch: any) => {
     try {
         dispatch(setLoadingStatus(true));
         const res = await profileAPI.addNews(id);
@@ -43,12 +43,12 @@ export const addNews = id => async dispatch => {
             dispatch(addSavedNews(res.data.news))
         }
         dispatch(setLoadingStatus(false))
-    } catch (e) {
+    } catch (e: any) {
         console.log(e.response.data.message)
     }
 }
 
-export const deleteNews = id => async dispatch => {
+export const deleteNews = (id: any) => async (dispatch: any) => {
     try {
         const res = await profileAPI.deleteNews(id);
         if(res.status === 200) {
@@ -61,18 +61,23 @@ export const deleteNews = id => async dispatch => {
 }
 
 
-export const fetchSavedNews = () => async dispatch => {
+export const fetchSavedNews = () => async (dispatch: any) => {
     try {
+        //todo: learn about it
+        /*
+        чи треба тут дату і як її правильно в аксіосі відображаи
+        де організувати обробку помилок ту чи в axios
+        * */
         dispatch(setLoadingStatus(true))
-        const res = await profileAPI.getSavedNews();
-        if(res.data.length) {
+        const data = await profileAPI.getSavedNews();
+        if(data) {
             let savedNewsId = [];
-            for(let i of res.data) {
+            for(let i of data) {
                 savedNewsId.push(i._id)
             }
             dispatch(setSavedIdNews(savedNewsId))
         }
-        dispatch(setSavedNews(res.data));
+        dispatch(setSavedNews(data));
         dispatch(setLoadingStatus(false))
     } catch (e) {
         console.log(e);

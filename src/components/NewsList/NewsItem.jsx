@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import NewsItemInfo from "./NewsItemInfo";
 import {getSavedNewsId} from "../../selectors/profile";
 import {addNews} from "../../redux/profileReducer";
-import {useClickLoading} from "../../hook/useLoading";
+import {useClickLoading} from "../../hooks/useLoading";
 
 const NewsItem = (props) => {
     const dispatch = useDispatch();
-    const savedNewsId = useSelector(state => getSavedNewsId(state));
+    const savedNewsId = useSelector(getSavedNewsId);
 
     const [isNewsAdding, setIsNewsAdding] = useClickLoading(savedNewsId, props._id, savedNewsId)
 

@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {registration} from "../../redux/authReducer";
+import {registration} from "../../redux/authReducert";
+import {useActions} from "../../hooks/useActions";
 
 const Registration = () => {
     const [username, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch();
+    const {authThunk} = useActions()
 
     const registrClick = (e) => {
         e.preventDefault();
-        dispatch(registration(username, password));
+        authThunk.registration(username, password)
     }
 
     return (

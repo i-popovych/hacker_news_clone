@@ -2,17 +2,19 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import s from "./Header.module.css"
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../redux/authReducer";
+import {logout} from "../redux/authReducert";
 import {checkAuth, getUserName} from "../selectors/auth";
+import {useActions} from "../hooks/useActions";
 
 const Header = () => {
     const dispatch = useDispatch();
-    const isAuth = useSelector(state => checkAuth(state))
-    const userName = useSelector(state => getUserName(state))
+    const isAuth = useSelector(checkAuth)
+    const userName = useSelector(getUserName)
+    const {authThunk} = useActions();
 
     const logOutClick = (e) => {
         e.preventDefault();
-        dispatch(logout());
+        authThunk.logout();
     }
 
     return (
