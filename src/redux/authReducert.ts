@@ -1,5 +1,7 @@
 import authAPI, {UserAuthData} from "../api/auth";
-import {InferActionsTypes} from "./store";
+import {AppState, BaseThunk, InferActionsTypes} from "./store";
+import {Dispatch} from "redux";
+import {IUserAuth} from "../model/user";
 
 enum AuthTypes {
     SET_CURRENT_USER = 'authReducer/SET_CURRENT_USER',
@@ -10,14 +12,14 @@ enum AuthTypes {
 
 const initialState = {
     //todo: add here null
-    currentUser: {} as UserAuthData | {},
+    currentUser: {} as IUserAuth | {},
     isAuth: true,
     isInitial: false
 }
 
 type InitialState = typeof initialState
 
-const authReducer = (state = initialState, action: Actions): InitialState => {
+const authReducer = (state = initialState, action: AuthActions): InitialState => {
     switch (action.type) {
         case AuthTypes.SET_CURRENT_USER: return {...state, currentUser: action.data}
         case AuthTypes.DELETE_CURRENT_USER: return {...state, currentUser: {}}
@@ -29,16 +31,18 @@ const authReducer = (state = initialState, action: Actions): InitialState => {
 }
 
 export const authActions = {
-    setCurrentUser: (data: any) => ({type: AuthTypes.SET_CURRENT_USER, data} as const),
+    setCurrentUser: (data: IUserAuth) => ({type: AuthTypes.SET_CURRENT_USER, data} as const),
     deleteCurrentUser: () => ({type: AuthTypes.DELETE_CURRENT_USER} as const),
     setAuthStatus: (bool: boolean) => ({type: AuthTypes.SET_AUTH_STATUS, bool} as const),
     initializeApp: () => ({type: AuthTypes.INITIALIZE_APP} as const)
 }
 
 export const authThunk = {
-    checkAuth: () => async (dispatch: any) => {
-        // const {auth} = useActions();
+    //for example how to typing dispatch
+    checkAuth: () => async (dispatch: Dispatch<AuthActions>, getState: MyGetState) => {
         try {
+            // const state = getState();
+            // state.auth.isAuth..
             const data = await authAPI.getAuthStatus();
             dispatch(authActions.initializeApp())
             dispatch(authActions.setCurrentUser(data.user))
@@ -47,22 +51,25 @@ export const authThunk = {
             authActions.setAuthStatus(false)
         }
     },
-    login: (username: string, password: string) => async (dispatch: any) => {
+    login: (username: string, password: string): Thunk => async (dispatch, getState) => {
         try {
+            //for example
+            // const state = getState()
+            // state.auth...
             const data = await authAPI.login(username, password)
             dispatch(authActions.setAuthStatus(true))
-            dispatch(authActions.setCurrentUser(data))
+            dispatch(authActions.setCurrentUser(data.user))
             localStorage.setItem('token', data.token);
         } catch (e) {
             console.log(e)
         }
     },
 
-    registration: (username: string, password: string) => async (dispatch: any) => {
+    registration: (username: string, password: string): Thunk => async (dispatch) => {
         const res = await authAPI.registration(username, password)
     },
 
-    logout: () => async (dispatch: any) => {
+    logout: (): Thunk => async (dispatch) => {
         //todo тут дублювання коду в запитах
         // const {auth} = useActions();
         localStorage.removeItem('token');
@@ -72,6 +79,8 @@ export const authThunk = {
 
 }
 
-type Actions = InferActionsTypes<typeof authActions>
+export type AuthActions = InferActionsTypes<typeof authActions>
+type Thunk = BaseThunk<AuthActions>
+type MyGetState = () => AppState
 
 export default authReducer;

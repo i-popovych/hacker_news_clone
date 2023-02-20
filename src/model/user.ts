@@ -1,0 +1,1 @@
+export interface IUserAuth { username: string, _id: string }

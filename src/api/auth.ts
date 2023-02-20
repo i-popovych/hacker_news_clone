@@ -1,10 +1,11 @@
 import axios from "axios";
 import {instanse} from "./news";
+import {IUserAuth} from "../model/user";
 
 //todo: тут інтрфейс чи тип?????
 export interface UserAuthData {
     token: string
-    user: { username: string, _id: string }
+    user: IUserAuth
 }
 
 
