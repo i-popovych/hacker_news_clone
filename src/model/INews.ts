@@ -1,4 +1,4 @@
-export interface News {
+export interface INews {
     authorName: string
     countComment: number
     countLike: number

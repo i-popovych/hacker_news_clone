@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
-import {addNews} from "../redux/profileReducer";
 import {getSavedNewsId} from "../selectors/profile";
+import {profileThunk} from "../redux/profileReducer";
 
 export const WithSendButton = Children => {
     const dispatch = useDispatch();
     const savedNewsId = useSelector(getSavedNewsId);
     const onAddNewsClick = id => {
-        dispatch(addNews(id));
+        dispatch(profileThunk.addNews(id));
     }
 
     return props => {

@@ -1,14 +1,14 @@
 import React from 'react';
 import s from "./News.module.css"
 import {useDispatch} from "react-redux";
-import {deleteNews} from "../../redux/profileReducer";
+import {profileThunk} from "../../redux/profileReducer";
 import NewsItemInfo from "./NewsItemInfo";
 
 const NewsProfileItem = (props) => {
     const dispatch = useDispatch();
     const onDelete = (e) => {
         e.preventDefault();
-        dispatch(deleteNews(props._id));
+        dispatch(profileThunk.deleteNews(props._id));
     }
 
     return (

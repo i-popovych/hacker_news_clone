@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { INews } from '../../model/INews';
 import s from "./News.module.css";
 
-const NewsItemInfo = ({_id, title, countLike, authorName, countComment, linkTitle}) => {
+
+const NewsItemInfo: FC<INews> = ({_id, title, countLike,
+                                     authorName, countComment, linkTitle}) => {
     return (
         <>
             <div className={s.id}>id: {_id}</div>

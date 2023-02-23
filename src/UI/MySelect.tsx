@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const MySelect = ({value, selectChange, defaultValue, options}) => {
+interface Props {
+    value: string
+    selectChange: (str: string) => void
+    defaultValue: string
+    options: {value: string, name: string}[]
+}
+
+const MySelect: FC<Props> = ({value, selectChange, defaultValue, options}) => {
     return (
         <select
+            //todo do normal e
             onChange={e => selectChange(e.target.value)}
             value={value}>
             <option value="" disabled={true}>{defaultValue}</option>

@@ -1,12 +1,12 @@
 import axios from "axios";
-import { News } from "./types";
+import {INews} from "../model/INews";
 
 export const instanse = axios.create({
     baseURL: 'http://localhost:5000/api/',
 })
 
 interface newsList {
-    items: News[],
+    items: INews[],
     totalCount: number
 }
 

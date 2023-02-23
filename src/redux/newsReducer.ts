@@ -1,80 +1,97 @@
 import {NewsAPI} from "../api/news";
+import {INews} from "../model/INews";
+import {BaseThunk, InferActionsTypes} from "./store";
 
+enum ProfileTypes {
+    SET_NEWS = './newsReducer/SET_NEWS',
+    FILTER_NEWS = './newsReducer/FILTER_NEWS',
+    SEARCH_NEWS = './newsReducer/SEARCH_NEWS',
+    SET_SEARCHING_STATUS = './newsReducer/SET_SEARCHING_STATUS',
+    SET_lOAD_STATUS = './newsReducer/SET_lOAD_STATUS',
+    SET_TOTAL_COUNT = './newsReducer/SET_TOTAL_COUNT',
+    SET_CURRENT_NEWS_DATA_PAGE = './newsReducer/SET_CURRENT_NEWS_DATA_PAGE',
+    SET_CURRENT_NEWS_DATA_LIMIT = './newsReducer/SET_CURRENT_NEWS_DATA_LIMIT',
+}
 
-const SET_NEWS = './newsReducer/SET_NEWS'
-const FILTER_NEWS = './newsReducer/FILTER_NEWS'
-const SEARCH_NEWS = './newsReducer/SEARCH_NEWS'
-const SET_SEARCHING_STATUS = './newsReducer/SET_SEARCHING_STATUS'
-const SET_lOAD_STATUS = './newsReducer/SET_lOAD_STATUS'
-const SET_TOTAL_COUNT = './newsReducer/SET_TOTAL_COUNT'
-const SET_CURRENT_NEWS_DATA_PAGE = './newsReducer/SET_CURRENT_NEWS_DATA_PAGE'
-const SET_CURRENT_NEWS_DATA_LIMIT = './newsReducer/SET_CURRENT_NEWS_DATA_LIMIT'
-
+export interface CurrentNewsData {
+    page: number
+    limit: number
+}
 
 const initialState = {
-    newsArr: [],
-    searchNewsArr: [],
+    newsArr: [] as INews[],
+    searchNewsArr: [] as INews[],
     isSearching: false,
     isLoading: true,
-    totalCount: null,
+    totalCount: 0,
     currentNewsData: {
         page: 1,
         limit: 5
-    }
+    } as CurrentNewsData
 }
 
-const newsReducer = (state = initialState, action: any) => {
+type InitialState = typeof initialState
+
+const newsReducer = (state = initialState, action: NewsActions): InitialState => {
     switch (action.type) {
-        case SET_NEWS: return {...state, newsArr: action.data}
-        case FILTER_NEWS: {
+        case ProfileTypes.SET_NEWS: {
+            return {...state, newsArr: action.data}
+        }
+        case ProfileTypes.FILTER_NEWS: {
             return {
                 ...state,
                 newsArr: [...state.newsArr].sort((a: any, b: any) => a[action.value].localeCompare(b[action.value]))
             }
         }
 
-        case SEARCH_NEWS: {
+        case ProfileTypes.SEARCH_NEWS: {
             return {
                 ...state,
                 searchNewsArr: [...state.newsArr].filter((i: any) => i.title.includes(action.value))
             }
         }
-        case SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}
-        case SET_lOAD_STATUS: return {...state, isLoading: action.bool}
-        case SET_TOTAL_COUNT: return {...state, totalCount: action.num}
+        case ProfileTypes.SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}
+        case ProfileTypes.SET_lOAD_STATUS: return {...state, isLoading: action.bool}
+        case ProfileTypes.SET_TOTAL_COUNT: return {...state, totalCount: action.num}
 
-        case SET_CURRENT_NEWS_DATA_PAGE: {
+        case ProfileTypes.SET_CURRENT_NEWS_DATA_PAGE: {
             return {
                 ...state,
-                currentNewsData: {...state.currentNewsData, page: action.page}
+                currentNewsData: {...state.currentNewsData, page: Number(action.page)}
             }
         }
-        case SET_CURRENT_NEWS_DATA_LIMIT: {
+        case ProfileTypes.SET_CURRENT_NEWS_DATA_LIMIT: {
             return {
                 ...state,
-                currentNewsData: {...state.currentNewsData, limit: action.limit}
+                currentNewsData: {...state.currentNewsData, limit: Number(action.limit)}
             }
         }
         default: return state;
     }
 }
 
-export const setNews = (data: any) => ({type: SET_NEWS, data});
-export const filterNews = (value: string) => ({type: FILTER_NEWS, value});
-export const searchNews = (value: string) => ({type: SEARCH_NEWS, value});
-export const setSearchingStatus = (bool: boolean) => ({type: SET_SEARCHING_STATUS, bool});
-export const setLoadStatus = (bool: boolean) => ({type: SET_lOAD_STATUS, bool});
-export const setTotalCount = (num: number) => ({type: SET_TOTAL_COUNT, num});
-export const setCurrentNewsDataPage = (page: any) => ({type: SET_CURRENT_NEWS_DATA_PAGE, page});
-export const setCurrentNewsDataLimit = (limit: any) => ({type: SET_CURRENT_NEWS_DATA_LIMIT, limit});
-
-
-export const fetchNews = (page: any, limit: any) => async (dispatch: any) => {
-    dispatch(setLoadStatus(true));
-    const data = await NewsAPI.getNews(page, limit);
-    dispatch(setNews(data.items));
-    dispatch(setTotalCount(data.totalCount));
-    dispatch(setLoadStatus(false));
+export const newsActions = {
+    setNews: (data: INews[]) => ({type: ProfileTypes.SET_NEWS, data} as const),
+    filterNews: (value: string) => ({type: ProfileTypes.FILTER_NEWS, value} as const),
+    searchNews: (value: string) => ({type: ProfileTypes.SEARCH_NEWS, value} as const),
+    setSearchingStatus: (bool: boolean) => ({type: ProfileTypes.SET_SEARCHING_STATUS, bool} as const),
+    setLoadStatus: (bool: boolean) => ({type: ProfileTypes.SET_lOAD_STATUS, bool} as const),
+    setTotalCount: (num: number) => ({type: ProfileTypes.SET_TOTAL_COUNT, num} as const),
+    setCurrentNewsDataPage: (page: string) => ({type: ProfileTypes.SET_CURRENT_NEWS_DATA_PAGE, page} as const),
+    setCurrentNewsDataLimit: (limit: string) => ({type: ProfileTypes.SET_CURRENT_NEWS_DATA_LIMIT, limit} as const),
 }
+
+export const newsThunk = {
+    fetchNews: (page: number, limit: number): Thunk => async (dispatch) => {
+        dispatch(newsActions.setLoadStatus(true));
+        const data = await NewsAPI.getNews(page, limit);
+        dispatch(newsActions.setNews(data.items));
+        dispatch(newsActions.setTotalCount(data.totalCount));
+        dispatch(newsActions.setLoadStatus(false));
+    }
+}
+
+export type NewsActions = InferActionsTypes<typeof newsActions>
+type Thunk = BaseThunk<NewsActions>
 
 export default newsReducer

@@ -1,11 +1,21 @@
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import {authActions, authThunk} from "../redux/authReducert";
+import {actionsCreator} from "../redux/actionsCreator_notUse";
+import {ProfileActions, profileActions, profileThunk} from "../redux/profileReducer";
+import {newsActions, newsThunk} from "../redux/newsReducer";
+// import {authActions, authThunk} from "../redux/authReducert";
+
 
 export const useActions = () => {
     const dispatch = useDispatch();
     return {
-        authActions: bindActionCreators(authActions, dispatch),
-        authThunk: bindActionCreators(authThunk, dispatch)
+        authActions: bindActionCreators(actionsCreator.authActions, dispatch),
+        authThunk: bindActionCreators(actionsCreator.authThunk, dispatch),
+
+        profileActions: bindActionCreators(profileActions, dispatch),
+        profileThunk: bindActionCreators(profileThunk, dispatch),
+
+        newsActions: bindActionCreators(newsActions, dispatch),
+        newsThunk: bindActionCreators(newsThunk, dispatch),
     }
 }

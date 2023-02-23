@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 
-export const useSelect = (callback) => {
+export const useSelect = (callback: (value: string) => void) => {
     const [pressedSelect, setPressedSelect] = useState("");
     useEffect(() => {
         if(pressedSelect) callback(pressedSelect)
     }, [pressedSelect]);
-    return [pressedSelect, setPressedSelect];
+    return [pressedSelect, setPressedSelect] as const;
 }
 
-export const useSearch = (callback) => {
+export const useSearch = (callback: (value: string) => void) => {
     const [searchInp, setSearchInp] = useState("");
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -17,13 +17,13 @@ export const useSearch = (callback) => {
             callback ? callback(searchInp) : setSearchInp(searchInp);
         } else setLoading(false)
     }, [searchInp])
-    return [searchInp, setSearchInp, loading];
+    return [searchInp, setSearchInp, loading] as const;
 }
 
-export const useLimit = (callback, currentLimit = 5) => {
+export const useLimit = (callback: (value: string) => void, currentLimit = '5') => {
     const [pressedSelectNewsCount, setPressedSelectNewsCount] = useState(currentLimit);
     useEffect(() => {
         callback(pressedSelectNewsCount)
     }, [pressedSelectNewsCount])
-    return [pressedSelectNewsCount, setPressedSelectNewsCount];
+    return [pressedSelectNewsCount, setPressedSelectNewsCount] as const;
 }

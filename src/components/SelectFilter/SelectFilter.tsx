@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import MySelect from "../../UI/MySelect";
 import {useSelect} from "../../hooks/form";
 
-const SelectFilter = ({filterNews}) => {
+const SelectFilter: FC<{filterNews: (value: string) => void}> = ({filterNews}) => {
     const [pressedSelect, setPressedSelect] = useSelect(filterNews);
     return (
         <MySelect value={pressedSelect} defaultValue={"enter whatever"} selectChange={setPressedSelect}
