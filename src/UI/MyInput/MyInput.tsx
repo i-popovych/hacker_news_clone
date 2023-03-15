@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyInput = props => {
+const MyInput = () => {
     return (
         <div>
 

@@ -1,0 +1,25 @@
+@use '../../App' as variables;
+
+.newsHeader {
+  display: flex;
+  padding: 15px 0px;
+  justify-content: space-between;
+  .newsHeader__title {
+    color: variables.$base-color;
+  }
+  .newsHeader__lnk {
+    a {
+      color: #f4f4f4;
+      text-decoration: none;
+      border: #f4f4f4 2px solid;
+      padding: 7px;
+      border-radius: 5px;
+      &:hover {
+        text-decoration: underline;
+      }
+      &:before {
+        content: '+ '
+      }
+    }
+  }
+}

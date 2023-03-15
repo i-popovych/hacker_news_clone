@@ -1,0 +1,25 @@
+@use '../../App' as variavles;
+
+.appWrapper__footer {
+  background-color: variavles.$content-black-theme;
+  padding: 17px 0;
+  display: flex;
+  justify-content: center;
+  nav {
+    display: flex;
+    justify-content: start;
+    column-gap: 5px;
+    width: variavles.$content-width;
+    a {
+      font-size: 14px;
+      color: #959496;
+      text-decoration: none;
+      &:not(:last-child):after {
+        content: ' |'
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

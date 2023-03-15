@@ -6,14 +6,15 @@ import {useSearch} from "../hooks/form";
 import Pagination from "../common/Pagination/Pagination";
 import SavedNewsForm from "../components/SavedNewsForm/SavedNewsForm";
 import {sortByStr} from "../utils/utils";
+import {AppState} from "../redux/store";
 
 const Profile = () => {
-    const [searchInp, setSearchInp] = useSearch('');
+    const [searchInp, setSearchInp] = useSearch(null);
     const [filter, setFilter] = useState('');
     const totalNews = useSelector(getSavedNewsLength)
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(5);
-    let newsList = useSelector(state => getSavedNews(state, page, limit, searchInp));
+    const [page, setPage] = useState('1');
+    const [limit, setLimit] = useState('5');
+    let newsList = useSelector((state: AppState) => getSavedNews(state, +page, +limit, searchInp));
     useMemo(() => {
         if (filter) newsList = sortByStr(newsList, filter);
     }, [filter])
@@ -21,11 +22,11 @@ const Profile = () => {
     return (
         <div>
             <SavedNewsForm
-                limit={limit} setLimit={setLimit} searchInp={searchInp}
+                limit={Number(limit)} setLimit={setLimit} searchInp={searchInp}
                 setSearchInp={setSearchInp} setFilter={setFilter}
             />
             <NewsList newsList={newsList}/>
-            {!searchInp && <Pagination onChangePage={setPage} limit={limit} countItems={totalNews} currentPage={page}/>}
+            {!searchInp && <Pagination onChangePage={setPage} limit={Number(limit)} countItems={totalNews} currentPage={+page}/>}
         </div>
     );
 };

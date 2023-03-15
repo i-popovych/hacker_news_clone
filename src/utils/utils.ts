@@ -11,3 +11,10 @@ export const sortByStr = (arr: any[], str: string) => {
     console.log('sort')
     return arr.sort((a: any, b: any) => a[str].localeCompare(b[str]))
 }
+
+export const calculatePaginationIndex = (page: number, limit: number, length: number) => {
+    let b = page * limit;
+    let a = b - limit;
+    b = b > length ? length : b;
+    return [a, b]
+}

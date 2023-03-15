@@ -1,20 +1,22 @@
 import React, {FC, useEffect} from 'react';
 
 import {useSelector} from "react-redux";
-// @ts-ignore
 import NewsList from "../components/NewsList/NewsList";
-// @ts-ignore
 import Preloader from "../common/Preloader/Preloader";
-// @ts-ignore
 import Pagination from "../common/Pagination/Pagination";
-// @ts-ignore
 import {useSearch} from "../hooks/form";
-// @ts-ignore
 import NewsForm from "../components/NewsForm/NewsForm";
 import {useActions} from "../hooks/useActions";
-import {getCurrentNewsData, getLoadingStatus, getNewsList, getSearchingNews, getSearchingStatus, getTotalCount}
-    from "../selectors/selectors";
+import {
+    getCurrentNewsData,
+    getLoadingStatus,
+    getNewsList,
+    getSearchingNews,
+    getSearchingStatus,
+    getTotalCount
+} from "../selectors/selectors";
 import {INews} from "../model/INews";
+import NewsHeader from "../components/NewsHeader/NewsHeader";
 
 interface IProps {
     newsList: INews[]
@@ -43,6 +45,7 @@ const News: FC<IProps> = (props) => {
     const [searchInp, setSearchInp, loadingSearch] = useSearch(searchNews);
     return (
         <div>
+            <NewsHeader title={'News'}/>
             <NewsForm searchInp={searchInp} setSearchInp={setSearchInp} {...props}/>
             {loadingSearch ? <NewsList newsList={searchNewsArr}/> : <NewsList newsList={newsList}/>}
             <Pagination onChangePage={setCurrentNewsDataPage}

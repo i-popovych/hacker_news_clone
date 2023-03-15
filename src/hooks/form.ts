@@ -8,7 +8,7 @@ export const useSelect = (callback: (value: string) => void) => {
     return [pressedSelect, setPressedSelect] as const;
 }
 
-export const useSearch = (callback: (value: string) => void) => {
+export const useSearch = (callback: ((value: string) => void) | null) => {
     const [searchInp, setSearchInp] = useState("");
     const [loading, setLoading] = useState(false);
     useEffect(() => {

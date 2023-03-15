@@ -1,0 +1,63 @@
+@use '../../App' as variabes;
+
+$header-size: 20px;
+$distention: 10px;
+
+@mixin lnk-style {
+  font-size: $header-size;
+  color: variabes.$base-color;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+.header {
+  background-color: #3a3a3a;
+  position: relative;
+  padding: 10px 0px;
+  .header__content {
+    display: grid;
+    width: variabes.$content-width;
+    margin: 0 auto;
+
+    @media screen and (min-width: 700px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media screen and (max-width: 700px) {
+      grid-template-columns: 1fr;
+      grid-row-gap: 10px;
+    }
+
+    .header__logo {
+      max-width: 39px;
+      margin: 5px 5px 0px 0px;
+    }
+
+    .header__nav {
+      display: flex;
+      align-items: center;
+      column-gap: $distention;
+      justify-content: space-between;
+      div {
+        a {
+          @include lnk-style;
+        }
+      }
+    }
+
+    .header__authData {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      column-gap: $distention;
+      div {
+        a {
+          @include lnk-style;
+        }
+      }
+    }
+  }
+}

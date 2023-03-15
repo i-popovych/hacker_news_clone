@@ -12,7 +12,7 @@ enum AuthTypes {
 
 const initialState = {
     //todo: add here null
-    currentUser: {} as IUserAuth | {},
+    currentUser: null as IUserAuth | null,
     isAuth: true,
     isInitial: false
 }
@@ -22,7 +22,7 @@ type InitialState = typeof initialState
 const authReducer = (state = initialState, action: AuthActions): InitialState => {
     switch (action.type) {
         case AuthTypes.SET_CURRENT_USER: return {...state, currentUser: action.data}
-        case AuthTypes.DELETE_CURRENT_USER: return {...state, currentUser: {}}
+        case AuthTypes.DELETE_CURRENT_USER: return {...state, currentUser: null}
         case AuthTypes.SET_AUTH_STATUS: return {...state, isAuth: action.bool}
         case AuthTypes.INITIALIZE_APP: return {...state, isInitial: true}
         default:

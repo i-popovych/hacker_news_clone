@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
-import {login} from "../../redux/authReducert";
 import {useActions} from "../../hooks/useActions";
 
 const Login = () => {
     const [username, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const dispatch = useDispatch();
     const {authThunk} = useActions()
-    const loginClick = (e) => {
+    const loginClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         authThunk.login(username, password)
     }

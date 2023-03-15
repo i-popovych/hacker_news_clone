@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Search from "../Search/Search";
 import SelectLimit from "../SelectLimit/SelectLimit";
 import SelectFilter from "../SelectFilter/SelectFilter";
 
-const SavedNewsForm = ({setSearchInp, searchInp, limit, setLimit, setFilter}) => {
+interface Props {
+    setSearchInp: (value: string) => void
+    searchInp: string
+    //todo think about it
+    limit: number
+    setLimit: (value: string) => void
+    setFilter: (value: string) => void
+
+}
+
+const SavedNewsForm: FC<Props> = ({setSearchInp, searchInp, limit, setLimit, setFilter}) => {
     return (
         <>
             <Search setSearchInp={setSearchInp} searchInp={searchInp}/>

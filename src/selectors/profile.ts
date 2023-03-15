@@ -1,7 +1,7 @@
 import {AppState} from "../redux/store";
 
 export const getLoadingStatus = (state: AppState) => state.profile.isLoading
-export const getSavedNews = (state: AppState, page: number, limit: number, search = null) => {
+export const getSavedNews = (state: AppState, page: number, limit: number, search: string | null = null) => {
     console.log('get saved news')
     if(search) return state.profile.savedNews.filter(i => i.title.includes(search))
     limit = +limit;

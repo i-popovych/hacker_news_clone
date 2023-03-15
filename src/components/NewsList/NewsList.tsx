@@ -1,11 +1,17 @@
-import React from 'react';
-import s from "./News.module.css"
+import React, { FC } from 'react';
+import s from "./News.module.scss"
 import NotFound from "../NotFound";
 import NewsProfileItem from "./NewsProfileItem";
 import NewsItem from "./NewsItem";
+import { INews } from '../../model/INews';
 
-const NewsList = ({newsList, ...props}) => {
+interface Props {
+    newsList: INews[]
+}
+
+const NewsList: FC<Props> = ({newsList, ...props}) => {
     if(!newsList.length) return <NotFound/>
+    //todo change location get method
     let site = window.location.href.split('/').at(-1)
     let Item = site === 'profile' ? NewsProfileItem : NewsItem
 

@@ -1,0 +1,31 @@
+.NewsForm {
+  display: grid;
+  grid-template-columns: minmax(170px, 340px) 100px max-content;
+  justify-items: stretch;
+  column-gap: 20px;
+  align-items: center;
+  @media screen and (max-width: 700px) {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+            'search search search search search search'
+            'selectLimit selectLimit selectLimit selectFilter selectFilter selectFilter'
+  ;
+
+    &__search {
+      grid-area: search;
+    }
+    &__selectFilter {
+      grid-area: selectFilter;
+    }
+    &__selectLimit {
+      grid-area: selectLimit;
+    }
+  }
+  &__selectFilter, &__selectLimit {
+    width: 100%;
+     > * {
+       width: 100%;
+     }
+  }
+}
+

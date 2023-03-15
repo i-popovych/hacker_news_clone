@@ -1,4 +1,4 @@
-import {NewsAPI} from "../api/news";
+import NewsAPI from "../api/news";
 import {INews} from "../model/INews";
 import {BaseThunk, InferActionsTypes} from "./store";
 

@@ -1,4 +1,6 @@
 import React, { FC } from 'react';
+import {Search} from "react-bootstrap-icons";
+import s from './search.module.scss'
 
 interface Props {
     searchInp: string
@@ -6,11 +8,14 @@ interface Props {
     text?: string
 }
 
-const Search: FC<Props> = ({searchInp, setSearchInp, text = 'enter search input'}) => {
+const SearchForm: FC<Props> = ({searchInp, setSearchInp, text = 'enter search input'}) => {
     return (
-        <input type="text" value={searchInp} placeholder={text}
-               onChange={e => setSearchInp(e.target.value)}/>
+        <div className={s.search}>
+            <Search/>
+            <input type="text" value={searchInp} placeholder={text}
+                   onChange={e => setSearchInp(e.target.value)}/>
+        </div>
     );
 };
 
-export default Search;
+export default SearchForm;
