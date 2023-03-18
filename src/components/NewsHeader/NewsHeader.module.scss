@@ -4,9 +4,15 @@
   display: flex;
   padding: 15px 0px;
   justify-content: space-between;
+  font-family: variables.$decorative-font;
   .newsHeader__title {
     color: variables.$base-color;
   }
+
+  h1 {
+    font-weight: normal;
+  }
+
   .newsHeader__lnk {
     a {
       color: #f4f4f4;

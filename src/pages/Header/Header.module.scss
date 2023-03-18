@@ -1,6 +1,6 @@
 @use '../../App' as variabes;
 
-$header-size: 20px;
+$header-size: 18px;
 $distention: 10px;
 
 @mixin lnk-style {
@@ -17,6 +17,7 @@ $distention: 10px;
   background-color: #3a3a3a;
   position: relative;
   padding: 10px 0px;
+  font-family: variabes.$decorative-font;
   .header__content {
     display: grid;
     width: variabes.$content-width;
@@ -33,7 +34,6 @@ $distention: 10px;
 
     .header__logo {
       max-width: 39px;
-      margin: 5px 5px 0px 0px;
     }
 
     .header__nav {

@@ -1,5 +1,5 @@
 import profileAPI from "../api/profle";
-import {INews} from "../model/INews";
+import {INews, INews2} from "../model/INews";
 import {filterWithoutId, savedNewsWithoutId} from "../utils/reducers";
 import {BaseThunk, InferActionsTypes} from "./store";
 import {AuthActions, authActions} from "./authReducert";
@@ -16,7 +16,7 @@ enum ProfileTypes {
 
 const initialState = {
     savedNewsId: [] as string[],
-    savedNews: [] as INews[],
+    savedNews: [] as INews2[],
     isLoading: true
 }
 
@@ -43,12 +43,12 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
 }
 
 export const profileActions = {
-    setSavedNews: (newsArr: INews[]) => ({type: ProfileTypes.SAVED_NEWS, newsArr} as const),
+    setSavedNews: (newsArr: INews2[]) => ({type: ProfileTypes.SAVED_NEWS, newsArr} as const),
     setSavedIdNews: (newsIdArr: string[]) => ({type: ProfileTypes.SAVED_NEWS_ID, newsIdArr} as const),
     setLoadingStatus: (bool: boolean) => ({type: ProfileTypes.SET_LOADING_STATUS, bool} as const),
     deleteSavedNews: (newsId: string) => ({type: ProfileTypes.DELETE_SAVED_NEWS, newsId} as const),
     deleteSavedNewsId: (newsId: string) => ({type: ProfileTypes.DELETE_SAVED_NEWS_ID, newsId} as const),
-    addSavedNews: (news: INews) => ({type: ProfileTypes.ADD_SAVED_NEWS, news} as const),
+    addSavedNews: (news: INews2) => ({type: ProfileTypes.ADD_SAVED_NEWS, news} as const),
 }
 
 export const profileThunk = {
@@ -87,7 +87,7 @@ export const profileThunk = {
             if (data) {
                 let savedNewsId = [];
                 for (let i of data) {
-                    savedNewsId.push(i._id)
+                    savedNewsId.push(i.id)
                 }
                 dispatch(profileActions.setSavedIdNews(savedNewsId))
             }

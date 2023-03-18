@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
 import cn from "classnames";
-import s from "./Paginator.module.css"
+import s from "./Paginator.module.scss"
 import {usePageCount} from "../../hooks/usePageCount";
+import {Button} from "react-bootstrap";
 
 interface Props {
     countItems: number

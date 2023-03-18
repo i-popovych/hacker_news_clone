@@ -1,5 +1,5 @@
 import NewsAPI from "../api/news";
-import {INews} from "../model/INews";
+import {INews, INews2} from "../model/INews";
 import {BaseThunk, InferActionsTypes} from "./store";
 
 enum ProfileTypes {
@@ -19,8 +19,8 @@ export interface CurrentNewsData {
 }
 
 const initialState = {
-    newsArr: [] as INews[],
-    searchNewsArr: [] as INews[],
+    newsArr: [] as INews2[],
+    searchNewsArr: [] as INews2[],
     isSearching: false,
     isLoading: true,
     totalCount: 0,
@@ -71,7 +71,7 @@ const newsReducer = (state = initialState, action: NewsActions): InitialState =>
 }
 
 export const newsActions = {
-    setNews: (data: INews[]) => ({type: ProfileTypes.SET_NEWS, data} as const),
+    setNews: (data: INews2[]) => ({type: ProfileTypes.SET_NEWS, data} as const),
     filterNews: (value: string) => ({type: ProfileTypes.FILTER_NEWS, value} as const),
     searchNews: (value: string) => ({type: ProfileTypes.SEARCH_NEWS, value} as const),
     setSearchingStatus: (bool: boolean) => ({type: ProfileTypes.SET_SEARCHING_STATUS, bool} as const),

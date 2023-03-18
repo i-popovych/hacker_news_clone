@@ -5,33 +5,33 @@ import NewsItemInfo from "./NewsItemInfo";
 import {getSavedNewsId} from "../../selectors/profile";
 import {useClickLoading} from "../../hooks/useLoading";
 import {useActions} from "../../hooks/useActions";
-import {INews} from "../../model/INews";
+import {INews2} from "../../model/INews";
 import {ArrowClockwise, Bookmark, BookmarkFill} from "react-bootstrap-icons";
 
 
-const NewsItem: FC<INews> = ({_id, ...props}) => {
+const NewsItem: FC<INews2> = ({id, ...props}) => {
     const savedNewsId = useSelector(getSavedNewsId);
 
-    const [isNewsAdding, setIsNewsAdding] = useClickLoading(savedNewsId, _id, savedNewsId)
+    const [isNewsAdding, setIsNewsAdding] = useClickLoading(savedNewsId, id, savedNewsId)
     const [isDeleting, setIsDeleting] = useState(false)
     const {profileThunk} = useActions()
     const onAdd = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         setIsNewsAdding(true)
-        profileThunk.addNews(_id)
+        profileThunk.addNews(id)
     }
 
     const onDelete = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         setIsDeleting(true);
-        await profileThunk.deleteNews(_id);
+        await profileThunk.deleteNews(id);
         setIsDeleting(false);
     }
 
-    let isHave = useMemo(() => savedNewsId.includes(_id), [savedNewsId])
+    let isHave = useMemo(() => savedNewsId.includes(id), [savedNewsId])
     return (
         <article className={s.item}>
-            <NewsItemInfo _id={_id} {...props}/>
+            <NewsItemInfo id={id} {...props}/>
             <div className={s.item__newsStatusContainer}>
                 {
                     (isNewsAdding || isDeleting) ? <div><ArrowClockwise className={s.loading}/></div> :

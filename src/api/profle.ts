@@ -1,5 +1,5 @@
 import {instanse} from "./news";
-import {INews} from "../model/INews";
+import {INews, INews2} from "../model/INews";
 
 
 const profileAPI = {
@@ -14,7 +14,7 @@ const profileAPI = {
         });
     },
     getSavedNews: async () => {
-        const res = await instanse.get<INews[]>('saved-news', {
+        const res = await instanse.get<INews2[]>('saved-news', {
             headers: {authorization: `Barer ${localStorage.getItem('token')}`}
         })
         return res.data

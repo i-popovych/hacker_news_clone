@@ -12,7 +12,7 @@ const SelectLimit: FC<Props> = ({setLimit, limit}) => {
     return (
         //todo я не знаю як і з чим тут правильно працювати
         <MySelect value={String(pressedSelectNewsCount)} selectChange={setPressedSelectNewsCount}
-                  defaultValue={"enter news count"}
+                  description={"enter news count"}
                   options={[
                       {value: '5', name: '5'},
                       {value: '10', name: '10'},

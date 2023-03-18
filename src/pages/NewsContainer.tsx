@@ -15,12 +15,12 @@ import {
     getSearchingStatus,
     getTotalCount
 } from "../selectors/selectors";
-import {INews} from "../model/INews";
+import {INews, INews2} from "../model/INews";
 import NewsHeader from "../components/NewsHeader/NewsHeader";
 
 interface IProps {
-    newsList: INews[]
-    searchNewsArr: INews[]
+    newsList: INews2[]
+    searchNewsArr: INews2[]
     isSearching: boolean
     isLoading: boolean
     currentNewsData: {limit: number, page: number}

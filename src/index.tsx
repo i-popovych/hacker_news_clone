@@ -6,6 +6,7 @@ import {Provider} from "react-redux";
 import store from "./redux/store"
 import {unmountComponentAtNode} from "react-dom";
 
+
 const root: any = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
     <BrowserRouter>

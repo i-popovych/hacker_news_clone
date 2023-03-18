@@ -3,10 +3,10 @@ import s from "./News.module.scss"
 import NotFound from "../NotFound";
 import NewsProfileItem from "./NewsProfileItem";
 import NewsItem from "./NewsItem";
-import { INews } from '../../model/INews';
+import {INews, INews2} from '../../model/INews';
 
 interface Props {
-    newsList: INews[]
+    newsList: INews2[]
 }
 
 const NewsList: FC<Props> = ({newsList, ...props}) => {
@@ -19,7 +19,7 @@ const NewsList: FC<Props> = ({newsList, ...props}) => {
         <section className={s.newsList}>
             {
                 newsList.map(i => {
-                    return <Item key={i._id} {...i} {...props}/>
+                    return <Item key={i.id} {...i} {...props}/>
                 })
             }
         </section>

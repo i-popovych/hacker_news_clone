@@ -10,10 +10,11 @@ export interface INews {
 export interface INews2 {
     by: string
     descendants: number
-    id: number
+    id: string
     score: number
-    time: Date
+    time: number
     title: string
     type: string
     url: string
+    index: number
 }

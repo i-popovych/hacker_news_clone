@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getPagesCount = (total: number, limit: number) => Math.ceil(total / limit)
 
 export const setArrPage = (totalPage: number) => {
@@ -17,4 +19,16 @@ export const calculatePaginationIndex = (page: number, limit: number, length: nu
     let a = b - limit;
     b = b > length ? length : b;
     return [a, b]
+}
+
+export const getMainPartUrl = (url: string) => {
+    const temp = url.split('/')[2];
+    return temp.includes('www.') ? temp.split('www.')[1] : temp;
+}
+
+export const getDateFromMill = (milliseconds: number) => {
+    const currentDate = moment();
+    const unixDate = moment(milliseconds);
+    const diff = currentDate.diff(unixDate)
+    return moment.duration(diff).humanize() + ' ago'
 }

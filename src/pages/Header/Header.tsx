@@ -20,14 +20,14 @@ const Header = () => {
             <div className={s.header__content}>
                 <nav className={s.header__nav}>
                     <div id={'asd'}><img className={s.header__logo} src={require('../../images/nh_logo.png')} alt="hacker news logo"/></div>
-                    <div><NavLink to={'news'}>news</NavLink></div>
-                    <div><NavLink to={'past'}>past</NavLink></div>
+                    <div><NavLink to={'news'}>News</NavLink></div>
+                    <div><NavLink to={'past'}>Past</NavLink></div>
 
-                    <div><NavLink to={'comments'}>comments</NavLink></div>
-                    <div><NavLink to={'ask'}>ask</NavLink></div>
-                    <div><NavLink to={'show'}>show</NavLink></div>
-                    <div><NavLink to={'jobs'}>jobs</NavLink></div>
-                    <div><NavLink to={'submit'}>submit</NavLink></div>
+                    <div><NavLink to={'comments'}>Comments</NavLink></div>
+                    <div><NavLink to={'ask'}>Ask</NavLink></div>
+                    <div><NavLink to={'show'}>Show</NavLink></div>
+                    <div><NavLink to={'jobs'}>Jobs</NavLink></div>
+                    <div><NavLink to={'submit'}>Submit</NavLink></div>
                 </nav>
                 <section className={s.header__authData}>
                     {/*todo виділи в окремий компонент*/}
