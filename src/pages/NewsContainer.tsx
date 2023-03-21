@@ -3,7 +3,7 @@ import React, {FC, useEffect} from 'react';
 import {useSelector} from "react-redux";
 import NewsList from "../components/NewsList/NewsList";
 import Preloader from "../common/Preloader/Preloader";
-import Pagination from "../common/Pagination/Pagination";
+import PaginationUI from "../common/Pagination/PaginationUI";
 import {useSearch} from "../hooks/form";
 import NewsForm from "../components/NewsForm/NewsForm";
 import {useActions} from "../hooks/useActions";
@@ -48,9 +48,9 @@ const News: FC<IProps> = (props) => {
             <NewsHeader title={'News'}/>
             <NewsForm searchInp={searchInp} setSearchInp={setSearchInp} {...props}/>
             {loadingSearch ? <NewsList newsList={searchNewsArr}/> : <NewsList newsList={newsList}/>}
-            <Pagination onChangePage={setCurrentNewsDataPage}
-                        currentPage={currentNewsData.page} countItems={totalCount}
-                        limit={currentNewsData.limit}/>
+            <PaginationUI onChangePage={setCurrentNewsDataPage}
+                          currentPage={currentNewsData.page} countItems={totalCount}
+                          limit={currentNewsData.limit}/>
         </div>
     );
 };

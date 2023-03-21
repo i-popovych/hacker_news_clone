@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {getSavedNews, getSavedNewsLength} from "../selectors/profile";
 import NewsList from "../components/NewsList/NewsList";
 import {useSearch} from "../hooks/form";
-import Pagination from "../common/Pagination/Pagination";
+import PaginationUI from "../common/Pagination/PaginationUI";
 import SavedNewsForm from "../components/SavedNewsForm/SavedNewsForm";
 import {sortByStr} from "../utils/utils";
 import {AppState} from "../redux/store";
@@ -26,7 +26,7 @@ const Profile = () => {
                 setSearchInp={setSearchInp} setFilter={setFilter}
             />
             <NewsList newsList={newsList}/>
-            {!searchInp && <Pagination onChangePage={setPage} limit={Number(limit)} countItems={totalNews} currentPage={+page}/>}
+            {!searchInp && <PaginationUI onChangePage={setPage} limit={Number(limit)} countItems={totalNews} currentPage={+page}/>}
         </div>
     );
 };

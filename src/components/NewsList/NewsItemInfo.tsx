@@ -17,18 +17,18 @@ const NewsItemInfo: FC<INews2> = ({
                     <Triangle className={s.scope__img}/>
                     <span>{score}</span>
                 </div>
-                <div className={s.title}>{title}</div>
+                <div className={s.title}><a href={url}>{title}</a></div>
             </div>
             <div className={s.item__right}>
                 <div className={s.by}>
                     <PersonFill/>
-                    <span>{by}</span>
+                    <a href={`https://news.ycombinator.com/user?id=${by}`}>{by}</a>
                 </div>
                 <div className={s.url}>
                     <Window/>
-                    <span>
+                    <a href={url}>
                     {url ? getMainPartUrl(url) : 'news.ycombinator.com'}
-                </span>
+                </a>
                 </div>
                 <div className={s.time}>
                     <ClockFill/>

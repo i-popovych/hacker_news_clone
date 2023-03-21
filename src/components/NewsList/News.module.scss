@@ -15,12 +15,24 @@
     @media screen and (max-width: 1300px) {
       grid-template-columns: 1fr;
     }
+    a {
+      margin: 0;
+      color: variables.$base-color;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+      &:visited {
+        color: #898989
+      }
+    }
     .item__left {
       flex-wrap: wrap;
       display: flex;
       .title {
         font-family: Arial;
         font-size: 17px;
+        margin-top: 2px;
       }
     }
     .item__right {
