@@ -4,7 +4,7 @@ import {INews, INews2} from "../model/INews";
 
 const profileAPI = {
     addNews: async (newsId: string) => {
-        return await instanse.post('add_news', {newsId}, {
+        return await instanse.post<{newsId: string}>('add_news', {newsId}, {
             headers: {authorization: `Barer ${localStorage.getItem('token')}`}
         });
     },
@@ -13,8 +13,8 @@ const profileAPI = {
             headers: {authorization: `Barer ${localStorage.getItem('token')}`}
         });
     },
-    getSavedNews: async () => {
-        const res = await instanse.get<INews2[]>('saved-news', {
+    getSavedNewsIds: async () => {
+        const res = await instanse.get<string[]>('saved-news', {
             headers: {authorization: `Barer ${localStorage.getItem('token')}`}
         })
         return res.data

@@ -3,6 +3,7 @@ import {INews, INews2} from "../model/INews";
 import {filterWithoutId, savedNewsWithoutId} from "../utils/reducers";
 import {BaseThunk, InferActionsTypes} from "./store";
 import {AuthActions, authActions} from "./authReducert";
+import NewsAPI from "../api/news";
 
 
 enum ProfileTypes {
@@ -83,15 +84,12 @@ export const profileThunk = {
             де організувати обробку помилок ту чи в axios
             * */
             dispatch(profileActions.setLoadingStatus(true))
-            const data = await profileAPI.getSavedNews();
-            if (data) {
-                let savedNewsId = [];
-                for (let i of data) {
-                    savedNewsId.push(i.id)
-                }
-                dispatch(profileActions.setSavedIdNews(savedNewsId))
-            }
-            dispatch(profileActions.setSavedNews(data));
+            const newsIdsArr = await profileAPI.getSavedNewsIds();
+            if (newsIdsArr) dispatch(profileActions.setSavedIdNews(newsIdsArr))
+
+            const news: INews2[] = await Promise.all(newsIdsArr.map(id => NewsAPI.getItem( Number(id) )))
+
+            dispatch(profileActions.setSavedNews(news));
             dispatch(profileActions.setLoadingStatus(false))
         } catch (e) {
             console.log(e);
