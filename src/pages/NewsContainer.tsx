@@ -17,13 +17,14 @@ import {
 } from "../selectors/selectors";
 import {INews, INews2} from "../model/INews";
 import NewsHeader from "../components/NewsHeader/NewsHeader";
+import NewsItem from "../components/NewsList/NewsItem";
 
 interface IProps {
     newsList: INews2[]
     searchNewsArr: INews2[]
     isSearching: boolean
     isLoading: boolean
-    currentNewsData: {limit: number, page: number}
+    currentNewsData: { limit: number, page: number }
     totalCount: number
     fetchNews: (page: number, limit: number) => void
     filterNews: (value: string) => void
@@ -47,7 +48,8 @@ const News: FC<IProps> = (props) => {
         <div>
             <NewsHeader title={'News'}/>
             <NewsForm searchInp={searchInp} setSearchInp={setSearchInp} {...props}/>
-            {loadingSearch ? <NewsList newsList={searchNewsArr}/> : <NewsList newsList={newsList}/>}
+            {loadingSearch ? <NewsList newsList={searchNewsArr} ChildrenItem={NewsItem}/>
+                : <NewsList newsList={newsList} ChildrenItem={NewsItem}/>}
             <PaginationUI onChangePage={setCurrentNewsDataPage}
                           currentPage={currentNewsData.page} countItems={totalCount}
                           limit={currentNewsData.limit}/>

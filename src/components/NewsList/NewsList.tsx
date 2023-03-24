@@ -7,19 +7,20 @@ import {INews, INews2} from '../../model/INews';
 
 interface Props {
     newsList: INews2[]
+    ChildrenItem: React.ElementType
 }
 
-const NewsList: FC<Props> = ({newsList, ...props}) => {
-    if(!newsList.length) return <NotFound/>
+const NewsList: FC<Props> = ({newsList, ChildrenItem,  ...props}) => {
+    if(!newsList.length && !newsList.filter(i => i === null).length) return <NotFound/>
     //todo change location get method
-    let site = window.location.href.split('/').at(-1)
-    let Item = site === 'profile' ? NewsProfileItem : NewsItem
+    // let site = window.location.href.split('/').at(-1)
+    // let Item = site === 'profile' ? NewsProfileItem : NewsItem
 
     return (
         <section className={s.newsList}>
             {
                 newsList.map(i => {
-                    return <Item key={i.id} {...i} {...props}/>
+                    return <ChildrenItem key={i.id} {...i} {...props}/>
                 })
             }
         </section>

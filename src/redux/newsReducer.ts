@@ -40,14 +40,16 @@ const newsReducer = (state = initialState, action: NewsActions): InitialState =>
         case ProfileTypes.FILTER_NEWS: {
             return {
                 ...state,
-                newsArr: [...state.newsArr].sort((a: any, b: any) => a[action.value].localeCompare(b[action.value]))
+                newsArr:
+                    [...state.newsArr].sort((a: any, b: any) => a[action.value].localeCompare(b[action.value]))
             }
         }
 
         case ProfileTypes.SEARCH_NEWS: {
             return {
                 ...state,
-                searchNewsArr: [...state.newsArr].filter((i: any) => i.title.includes(action.value))
+                searchNewsArr:
+                    [...state.newsArr].filter((i: INews2) => i.title.toLowerCase().includes(action.value.toLowerCase()))
             }
         }
         case ProfileTypes.SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}

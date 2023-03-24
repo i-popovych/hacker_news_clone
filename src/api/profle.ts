@@ -14,7 +14,7 @@ const profileAPI = {
         });
     },
     getSavedNewsIds: async () => {
-        const res = await instanse.get<string[]>('saved-news', {
+        const res = await instanse.get<{newsList: string[]}>('saved-news', {
             headers: {authorization: `Barer ${localStorage.getItem('token')}`}
         })
         return res.data

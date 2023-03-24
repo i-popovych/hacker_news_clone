@@ -14,7 +14,8 @@ export const useInitialize = () => {
         console.log('initialize')
         const fetchData = async () => {
             await authThunk.checkAuth()
-            await profileThunk.fetchSavedNews()
+            // await profileThunk.fetchSavedNews()
+            await profileThunk.fetchSavedNewsIds()
             setIsInitialize(true);
         }
         fetchData();

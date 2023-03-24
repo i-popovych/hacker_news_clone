@@ -14,7 +14,7 @@ export const sortByStr = (arr: any[], str: string) => {
     return arr.sort((a: any, b: any) => a[str].localeCompare(b[str]))
 }
 
-export const calculatePaginationIndex = (page: number, limit: number, length: number) => {
+export const calculatePaginationIndex = (page: number, limit: number, length: number): [number, number] => {
     let b = page * limit;
     let a = b - limit;
     b = b > length ? length : b;
@@ -32,3 +32,5 @@ export const getDateFromMill = (milliseconds: number) => {
     const diff = currentDate.diff(unixDate)
     return moment.duration(diff).humanize() + ' ago'
 }
+
+export const unicalizeArr = (arr: string[]) => Array.from( new Set(arr) )

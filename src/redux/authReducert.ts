@@ -13,7 +13,7 @@ enum AuthTypes {
 const initialState = {
     //todo: add here null
     currentUser: null as IUserAuth | null,
-    isAuth: true,
+    isAuth: false,
     isInitial: false
 }
 

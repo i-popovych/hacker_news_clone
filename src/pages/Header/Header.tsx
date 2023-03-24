@@ -10,9 +10,9 @@ const Header = () => {
     const userName = useSelector(getUserName)
     const {authThunk} = useActions();
 
-    const logOutClick = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        authThunk.logout();
+    const logOutClick = async () => {
+        await authThunk.logout();
+        window.location.reload();
     }
 
     return (

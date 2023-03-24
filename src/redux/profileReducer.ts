@@ -1,9 +1,13 @@
 import profileAPI from "../api/profle";
 import {INews, INews2} from "../model/INews";
 import {filterWithoutId, savedNewsWithoutId} from "../utils/reducers";
-import {BaseThunk, InferActionsTypes} from "./store";
+import {AppState, BaseThunk, InferActionsTypes} from "./store";
 import {AuthActions, authActions} from "./authReducert";
+import {useSelect} from "../hooks/form";
+import {getSavedNewsItem} from "../selectors/selectors";
+import {useSelector} from "react-redux";
 import NewsAPI from "../api/news";
+import {unicalizeArr} from "../utils/utils";
 
 
 enum ProfileTypes {
@@ -30,11 +34,13 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
         case ProfileTypes.ADD_SAVED_NEWS:
             return {...state, savedNews: [...state.savedNews, action.news]}
         case ProfileTypes.SAVED_NEWS_ID:
-            return {...state, savedNewsId: [...state.savedNewsId, ...action.newsIdArr]}
+            return {...state, savedNewsId: unicalizeArr([...state.savedNewsId, ...action.newsIdArr])}
         case ProfileTypes.DELETE_SAVED_NEWS:
             return {...state, savedNews: savedNewsWithoutId(state.savedNews, action.newsId)}
-        case ProfileTypes.DELETE_SAVED_NEWS_ID:
-            return {...state, savedNewsId: filterWithoutId(state.savedNewsId, action.newsId)}
+        case ProfileTypes.DELETE_SAVED_NEWS_ID: {
+            const res = state.savedNewsId.filter(i => i != action.newsId);
+            return {...state, savedNewsId: res}
+        }
         case ProfileTypes.SET_LOADING_STATUS:
             return {...state, isLoading: action.bool}
 
@@ -58,7 +64,9 @@ export const profileThunk = {
             const res = await profileAPI.addNews(id);
             if (res.status === 200) {
                 dispatch(profileActions.setSavedIdNews([id]))
-                dispatch(profileActions.addSavedNews(res.data.news))
+                const news: INews2 = await NewsAPI.getItem(Number(id))
+                if (news) dispatch(profileActions.addSavedNews(news))
+                else console.log('no news was found')
             }
             dispatch(profileActions.setLoadingStatus(false))
     },
@@ -76,23 +84,30 @@ export const profileThunk = {
     },
 
 
-    fetchSavedNews: (): Thunk => async (dispatch) => {
+    // fetchSavedNews: (): Thunk => async (dispatch) => {
+    //     try {
+    //         //todo: learn about it
+    //         /*
+    //         чи треба тут дату і як її правильно в аксіосі відображаи
+    //         де організувати обробку помилок ту чи в axios
+    //         * */
+    //         dispatch(profileActions.setLoadingStatus(true))
+    //         const newsIdsArr = await profileAPI.getSavedNewsIds();
+    //         if (newsIdsArr) {
+    //             dispatch(profileActions.setSavedIdNews(newsIdsArr))
+    //         }
+    //         // dispatch(profileActions.setSavedNews(data));
+    //         dispatch(profileActions.setLoadingStatus(false))
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // },
+    fetchSavedNewsIds: (): Thunk => async (dispatch) => {
         try {
-            //todo: learn about it
-            /*
-            чи треба тут дату і як її правильно в аксіосі відображаи
-            де організувати обробку помилок ту чи в axios
-            * */
-            dispatch(profileActions.setLoadingStatus(true))
-            const newsIdsArr = await profileAPI.getSavedNewsIds();
-            if (newsIdsArr) dispatch(profileActions.setSavedIdNews(newsIdsArr))
-
-            const news: INews2[] = await Promise.all(newsIdsArr.map(id => NewsAPI.getItem( Number(id) )))
-
-            dispatch(profileActions.setSavedNews(news));
-            dispatch(profileActions.setLoadingStatus(false))
+            const ids = await profileAPI.getSavedNewsIds();
+            dispatch(profileActions.setSavedIdNews(ids.newsList))
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
     }
 }

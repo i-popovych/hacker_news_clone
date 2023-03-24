@@ -14,6 +14,7 @@ export const getSavedNews = (state: AppState, page: number, limit: number, searc
     return news;
 }
 
+
 export const getSavedNewsLength = (state: AppState) => state.profile.savedNews.length
 export const getSavedNewsId = (state: AppState) => state.profile.savedNewsId
 
