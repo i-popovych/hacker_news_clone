@@ -1,4 +1,4 @@
-import authAPI, {UserAuthData} from "../api/auth";
+import authAPI from "../api/auth";
 import {AppState, BaseThunk, InferActionsTypes} from "./store";
 import {Dispatch} from "redux";
 import {IUserAuth} from "../model/user";
@@ -11,7 +11,6 @@ enum AuthTypes {
 }
 
 const initialState = {
-    //todo: add here null
     currentUser: null as IUserAuth | null,
     isAuth: false,
     isInitial: false
@@ -41,8 +40,6 @@ export const authThunk = {
     //for example how to typing dispatch
     checkAuth: () => async (dispatch: Dispatch<AuthActions>, getState: MyGetState) => {
         try {
-            // const state = getState();
-            // state.auth.isAuth..
             const data = await authAPI.getAuthStatus();
             dispatch(authActions.initializeApp())
             dispatch(authActions.setCurrentUser(data.user))
@@ -52,17 +49,10 @@ export const authThunk = {
         }
     },
     login: (username: string, password: string): Thunk => async (dispatch, getState) => {
-        try {
-            //for example
-            // const state = getState()
-            // state.auth...
             const data = await authAPI.login(username, password)
             dispatch(authActions.setAuthStatus(true))
             dispatch(authActions.setCurrentUser(data.user))
             localStorage.setItem('token', data.token);
-        } catch (e) {
-            throw new Error()
-        }
     },
 
     registration: (username: string, password: string): Thunk => async (dispatch) => {
@@ -70,8 +60,6 @@ export const authThunk = {
     },
 
     logout: (): Thunk => async (dispatch) => {
-        //todo тут дублювання коду в запитах
-        // const {auth} = useActions();
         localStorage.removeItem('token');
         dispatch(authActions.deleteCurrentUser());
         dispatch(authActions.setAuthStatus(false));

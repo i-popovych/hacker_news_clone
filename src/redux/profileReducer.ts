@@ -78,26 +78,7 @@ export const profileThunk = {
             console.log(e)
         }
     },
-
-
-    // fetchSavedNews: (): Thunk => async (dispatch) => {
-    //     try {
-    //         //todo: learn about it
-    //         /*
-    //         чи треба тут дату і як її правильно в аксіосі відображаи
-    //         де організувати обробку помилок ту чи в axios
-    //         * */
-    //         dispatch(profileActions.setLoadingStatus(true))
-    //         const newsIdsArr = await profileAPI.getSavedNewsIds();
-    //         if (newsIdsArr) {
-    //             dispatch(profileActions.setSavedIdNews(newsIdsArr))
-    //         }
-    //         // dispatch(profileActions.setSavedNews(data));
-    //         dispatch(profileActions.setLoadingStatus(false))
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // },
+    
     fetchSavedNewsIds: (): Thunk => async (dispatch) => {
         try {
             const ids = await profileAPI.getSavedNewsIds();

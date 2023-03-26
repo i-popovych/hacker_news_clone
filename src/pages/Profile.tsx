@@ -1,19 +1,12 @@
-import React, {createContext, Dispatch, useContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, Dispatch, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {getSavedNews, getSavedNewsId, getSavedNewsLength} from "../selectors/profile";
+import {getSavedNewsId} from "../selectors/profile";
 import NewsList from "../components/NewsList/NewsList";
 import {useSearch} from "../hooks/form";
-import PaginationUI from "../common/Pagination/PaginationUI";
-import SavedNewsForm from "../components/SavedNewsForm/SavedNewsForm";
-import {calculatePaginationIndex, sortByStr} from "../utils/utils";
-import {AppState} from "../redux/store";
 import NewsProfileItem from "../components/NewsList/NewsProfileItem";
 import {INews} from "../model/INews";
 import NewsAPI from "../api/news";
 import Search from "../components/Search/Search";
-import news from "../api/news";
-import profileAPI from "../api/profle";
-import {useActions} from "../hooks/useActions";
 import Preloader from "../common/Preloader/Preloader";
 
 const onSearch = (arr: INews[], callback: any) => (searchInp: string) => {
@@ -34,7 +27,6 @@ const Profile = () => {
     let [newsSearchedList, setNewsSearchedList] = useState([] as INews[]);
     const [searchInp, setSearchInp] = useSearch(onSearch(newsList, setNewsSearchedList));
     const [isLoading, setIsLoading] = useState(true);
-    //
     // const [totalNews, setTotalNews] = useState(null as number | null)
     // const [page, setPage] = useState('1');
     // const [limit, setLimit] = useState(5);

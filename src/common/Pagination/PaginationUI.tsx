@@ -1,8 +1,5 @@
 import React, {FC} from 'react';
-import cn from "classnames";
-import s from "./Paginator.module.scss"
 import {usePageCount} from "../../hooks/usePageCount";
-import {Button} from "react-bootstrap";
 import {Pagination} from '@mui/material';
 
 interface Props {

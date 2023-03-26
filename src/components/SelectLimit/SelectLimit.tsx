@@ -10,7 +10,6 @@ interface Props {
 const SelectLimit: FC<Props> = ({setLimit, limit}) => {
     const [pressedSelectNewsCount, setPressedSelectNewsCount] = useLimit(setLimit, String(limit));
     return (
-        //todo я не знаю як і з чим тут правильно працювати
         <MySelect value={String(pressedSelectNewsCount)} selectChange={setPressedSelectNewsCount}
                   description={"enter news count"}
                   options={[

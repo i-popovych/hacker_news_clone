@@ -14,7 +14,6 @@ const App = () => {
     const isInitial = useInitialize();
     if (!isInitial) return <Preloader/>
 
-
     return (
         <div className={'app-wrapper'}>
             <Header/>

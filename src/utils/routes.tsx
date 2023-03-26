@@ -1,7 +1,5 @@
 import {Navigate} from "react-router";
 import News from "../pages/NewsContainer";
-
-import Past from "../pages/Past";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/auth/Login";
 import Registration from "../pages/auth/Registration";

@@ -1,7 +1,7 @@
 import {AppState} from "../redux/store";
 
 export const getNewsList = (state: AppState) => state.news.newsArr
-export const getSavedNewsItem  = (state: AppState, id: string) => state.news.newsArr.find(i => i.id === id)
+// export const getSavedNewsItem  = (state: AppState, id: string) => state.news.newsArr.find(i => i.id === id)
 
 export const getSearchingNews = (state: AppState) => state.news.searchNewsArr
 

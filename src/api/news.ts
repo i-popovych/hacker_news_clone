@@ -1,8 +1,8 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {INews} from "../model/INews";
 import {calculatePaginationIndex} from "../utils/utils";
 
-export const instanse = axios.create({
+export const localhost = axios.create({
     baseURL: 'http://localhost:5000/api/',
 })
 
@@ -17,7 +17,6 @@ interface newsList {
 }
 
 const NewsAPI = {
-    //todo typing it
     getAllNewsIds: async (type: 'topstories' | 'newstories') => {
         const res = await hn.get<number[]>(`${type}.json`, {
             params: {
@@ -29,11 +28,6 @@ const NewsAPI = {
     getNews: async (page: number = 1, limit: number = 10, type: 'topstories' | 'newstories' = 'topstories'): Promise<newsList> => {
         let newsIdsArr: number[]  = await NewsAPI.getAllNewsIds(type);
         const len = newsIdsArr.length
-        // switch (type) {
-        //     case 'topstories':
-        //         newsIdsArr = await NewsAPI.getAllNewsIds('topstories');
-        //         break;
-        // }
         let [a, b] = calculatePaginationIndex(page, limit, newsIdsArr!.length)
         newsIdsArr = newsIdsArr!.slice(a, b)
         let res2: INews[] = await Promise.all(
@@ -45,7 +39,6 @@ const NewsAPI = {
             })
         )
         return {items: res2, totalCount: len};
-
 
         // const res = await instanse.get<newsList>('news', {
         //     params: {
@@ -60,7 +53,6 @@ const NewsAPI = {
                 print: 'pretty'
             }
         })
-
         return res.data;
     }
 };

@@ -6,7 +6,6 @@ import SelectFilter from "../SelectFilter/SelectFilter";
 interface Props {
     setSearchInp: (value: string) => void
     searchInp: string
-    //todo think about it
     limit: number
     setLimit: (value: string) => void
     setFilter: (value: string) => void

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, useState} from 'react';
 import s from "./News.module.scss"
 import {useSelector} from "react-redux";
 import NewsItemInfo from "./NewsItemInfo";

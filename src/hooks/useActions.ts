@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import {actionsCreator} from "../redux/actionsCreator_notUse";
-import {ProfileActions, profileActions, profileThunk} from "../redux/profileReducer";
+import {useDispatch} from "react-redux";
+import {bindActionCreators} from "redux";
+import {actionsCreator} from "../redux/actionsCreator";
+import {profileActions, profileThunk} from "../redux/profileReducer";
 import {newsActions, newsThunk} from "../redux/newsReducer";
 // import {authActions, authThunk} from "../redux/authReducert";
 
