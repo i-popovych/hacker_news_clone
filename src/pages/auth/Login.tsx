@@ -1,26 +1,34 @@
-import React, {useState} from 'react';
+import * as React from 'react';
 import {useActions} from "../../hooks/useActions";
+import Form from './Form';
+import {LinkEnum} from "../../utils/routes";
+import {useState} from "react";
+import ErrorHoc from './ErrorHoc';
 
-const Login = () => {
-    const [username, setLogin] = useState('')
-    const [password, setPassword] = useState('')
+
+export default function SignIn() {
     const {authThunk} = useActions()
-    const loginClick = (e: React.MouseEvent<HTMLElement>) => {
+    const [error, setError] = useState<null | string>(null);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        authThunk.login(username, password)
-    }
+        const data = new FormData(e.currentTarget);
+        const login = data.get('login') as string
+        const pass = data.get('password') as string
+        try {
+            await authThunk.login(login, pass)
+        } catch (e) {
+            setError('Error during authorization attempt')
+        }
+    };
+
+    const WrappedForm = ErrorHoc(Form)
 
     return (
-        <div>
-            <form action="#">
-                <input value={username} onChange={e => setLogin(e.target.value)}/>
-                <input value={password} onChange={e => setPassword(e.target.value)}/>
-                <button onClick={loginClick}>send</button>
-            </form>
-        </div>
+        <WrappedForm
+            message={error}
+            handleSubmit={handleSubmit}
+            formName={'Sign in'}
+            redirectLink={LinkEnum.REGISTRATION}
+            redirectText={"Don't have an account? Sign Up"}/>
     );
-};
-
-
-
-export default Login;
+}

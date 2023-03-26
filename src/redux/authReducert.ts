@@ -61,7 +61,7 @@ export const authThunk = {
             dispatch(authActions.setCurrentUser(data.user))
             localStorage.setItem('token', data.token);
         } catch (e) {
-            console.log(e)
+            throw new Error()
         }
     },
 

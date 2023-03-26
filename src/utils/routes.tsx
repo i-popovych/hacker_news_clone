@@ -2,7 +2,7 @@ import {Navigate} from "react-router";
 import News from "../pages/NewsContainer";
 
 import Past from "../pages/Past";
-import Error from "../pages/Error";
+import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/auth/Login";
 import Registration from "../pages/auth/Registration";
 import Profile from "../pages/Profile";
@@ -13,16 +13,26 @@ interface IRoute {
     element: JSX.Element
 }
 
+export enum LinkEnum {
+    NEW = '/newest',
+    NEWS = '/news',
+    PROFILE = '/profile',
+    LOGIN = '/login',
+    REGISTRATION = '/registration'
+
+}
+
 export const privateRoutes: IRoute[] = [
-    {path: '/past',  element: <Past/>},
-    {path: '/news',  element: <News/>},
-    {path: '/profile',  element: <Profile/>},
-    {path: '/',  element: <Navigate to={'/news'}/>},
-    {path: '/*',  element: <Error/>},
+    {path: LinkEnum.NEW, element: <News type={'newstories'} headerName='New News'/>},
+    {path: LinkEnum.NEWS, element: <News type={"topstories"} headerName='News'/>},
+    {path: LinkEnum.PROFILE, element: <Profile/>},
+    {path: LinkEnum.LOGIN, element: <Navigate to={'/news'}/>},
+    {path: '/', element: <Navigate to={'/news'}/>},
+    {path: '/*', element: <PageNotFound/>},
 ]
 
-export const publicRoutes: IRoute[]  = [
-    {path: '/login', element: <Login/>},
-    {path: '/registration', element: <Registration/>},
-    {path: '/*', element:  <Navigate to={'/login'}/>},
+export const publicRoutes: IRoute[] = [
+    {path: LinkEnum.LOGIN, element: <Login/>},
+    {path: LinkEnum.REGISTRATION, element: <Registration/>},
+    {path: '/*', element: <Navigate to={'/login'}/>},
 ]

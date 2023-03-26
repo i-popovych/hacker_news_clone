@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {FormControl, InputLabel, NativeSelect} from "@mui/material";
 
 interface Props {
@@ -42,49 +42,6 @@ const MySelect: FC<Props> = ({value, selectChange, description, options}) => {
             </NativeSelect>
         </FormControl>
     )
-    // <FormControl variant="standard" sx={{m: 0, minWidth: 200, borderColor: 'white'}}>
-    //     <InputLabel sx={{color: 'red'}} id="demo-simple-select-standard-label">{description}</InputLabel>
-    //     <Select
-    //         sx={{
-    //             color: 'red', // text color
-    //             bgcolor: 'white', // background color
-    //             '& fieldset': {
-    //                 borderColor: 'red', // border color
-    //             },
-    //             '&:hover fieldset': {
-    //                 borderColor: 'blue', // border color on hover
-    //             },
-    //             '&.Mui-focused fieldset': {
-    //                 borderColor: 'green', // border color on focus
-    //             },
-    //         }}
-    //         labelId="demo-simple-select-standard-label"
-    //         id="demo-simple-select-standard"
-    //         value={currentValue}
-    //         onChange={e => {
-    //             selectChange(e.target.value)
-    //         }}
-    //     >
-    //         <MenuItem value="" disabled>
-    //             <em>{description}</em>
-    //         </MenuItem>
-    //         {
-    //             options.map(i => <MenuItem key={i.value} value={i.value}>{i.name}</MenuItem>)
-    //         }
-    //     </Select>
-    // </FormControl>
-    // <Select sx={{
-    //     width: 100,
-    //     height: 35
-    // }}
-    //     //todo do normal e
-    //     onChange={e => selectChange(e.target.value)}
-    //     value={value}>
-    //     <MenuItem value="" disabled={true}>{description}</MenuItem>
-    //     {
-    //         options.map(i => <option key={i.value} value={i.value}>{i.name}</option>)
-    //     }
-    // </Select>
 };
 
 export default MySelect;

@@ -4,6 +4,7 @@ import s from "./Header.module.scss"
 import {useSelector} from "react-redux";
 import {checkAuth, getUserName} from "../../selectors/auth";
 import {useActions} from "../../hooks/useActions";
+import {LinkEnum} from "../../utils/routes";
 
 const Header = () => {
     const isAuth = useSelector(checkAuth)
@@ -20,8 +21,8 @@ const Header = () => {
             <div className={s.header__content}>
                 <nav className={s.header__nav}>
                     <div id={'asd'}><img className={s.header__logo} src={require('../../images/nh_logo.png')} alt="hacker news logo"/></div>
-                    <div><NavLink to={'news'}>News</NavLink></div>
-                    <div><NavLink to={'past'}>Past</NavLink></div>
+                    <div><NavLink to={LinkEnum.NEWS}>News</NavLink></div>
+                    <div><NavLink to={LinkEnum.NEW}>New</NavLink></div>
 
                     <div><NavLink to={'comments'}>Comments</NavLink></div>
                     <div><NavLink to={'ask'}>Ask</NavLink></div>

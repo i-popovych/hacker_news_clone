@@ -1,5 +1,4 @@
 import {instanse} from "./news";
-import {INews, INews2} from "../model/INews";
 
 
 const profileAPI = {

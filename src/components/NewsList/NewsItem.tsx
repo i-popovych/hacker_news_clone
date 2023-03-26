@@ -5,16 +5,12 @@ import NewsItemInfo from "./NewsItemInfo";
 import {getSavedNewsId} from "../../selectors/profile";
 import {useClickLoading} from "../../hooks/useLoading";
 import {useActions} from "../../hooks/useActions";
-import {INews2} from "../../model/INews";
+import {INews} from "../../model/INews";
 import {ArrowClockwise, Bookmark, BookmarkFill} from "react-bootstrap-icons";
 
 
-const NewsItem: FC<INews2> = ({id, ...props}) => {
+const NewsItem: FC<INews> = ({id, ...props}) => {
     const savedNewsId = useSelector(getSavedNewsId);
-
-    useEffect(() => {
-        console.log(savedNewsId)
-    }, [savedNewsId])
 
     const [isNewsAdding, setIsNewsAdding] = useClickLoading(savedNewsId, id, savedNewsId)
     const [isDeleting, setIsDeleting] = useState(false)

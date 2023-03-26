@@ -1,11 +1,7 @@
 import profileAPI from "../api/profle";
-import {INews, INews2} from "../model/INews";
-import {filterWithoutId, savedNewsWithoutId} from "../utils/reducers";
-import {AppState, BaseThunk, InferActionsTypes} from "./store";
-import {AuthActions, authActions} from "./authReducert";
-import {useSelect} from "../hooks/form";
-import {getSavedNewsItem} from "../selectors/selectors";
-import {useSelector} from "react-redux";
+import {INews} from "../model/INews";
+import {savedNewsWithoutId} from "../utils/reducers";
+import {BaseThunk, InferActionsTypes} from "./store";
 import NewsAPI from "../api/news";
 import {unicalizeArr} from "../utils/utils";
 
@@ -21,7 +17,7 @@ enum ProfileTypes {
 
 const initialState = {
     savedNewsId: [] as string[],
-    savedNews: [] as INews2[],
+    savedNews: [] as INews[],
     isLoading: true
 }
 
@@ -50,25 +46,25 @@ const profileReducer = (state = initialState, action: ProfileActions): InitialSt
 }
 
 export const profileActions = {
-    setSavedNews: (newsArr: INews2[]) => ({type: ProfileTypes.SAVED_NEWS, newsArr} as const),
+    setSavedNews: (newsArr: INews[]) => ({type: ProfileTypes.SAVED_NEWS, newsArr} as const),
     setSavedIdNews: (newsIdArr: string[]) => ({type: ProfileTypes.SAVED_NEWS_ID, newsIdArr} as const),
     setLoadingStatus: (bool: boolean) => ({type: ProfileTypes.SET_LOADING_STATUS, bool} as const),
     deleteSavedNews: (newsId: string) => ({type: ProfileTypes.DELETE_SAVED_NEWS, newsId} as const),
     deleteSavedNewsId: (newsId: string) => ({type: ProfileTypes.DELETE_SAVED_NEWS_ID, newsId} as const),
-    addSavedNews: (news: INews2) => ({type: ProfileTypes.ADD_SAVED_NEWS, news} as const),
+    addSavedNews: (news: INews) => ({type: ProfileTypes.ADD_SAVED_NEWS, news} as const),
 }
 
 export const profileThunk = {
     addNews: (id: string): Thunk => async (dispatch) => {
-            dispatch(profileActions.setLoadingStatus(true));
-            const res = await profileAPI.addNews(id);
-            if (res.status === 200) {
-                dispatch(profileActions.setSavedIdNews([id]))
-                const news: INews2 = await NewsAPI.getItem(Number(id))
-                if (news) dispatch(profileActions.addSavedNews(news))
-                else console.log('no news was found')
-            }
-            dispatch(profileActions.setLoadingStatus(false))
+        dispatch(profileActions.setLoadingStatus(true));
+        const res = await profileAPI.addNews(id);
+        if (res.status === 200) {
+            dispatch(profileActions.setSavedIdNews([id]))
+            const news: INews = await NewsAPI.getItem(Number(id))
+            if (news) dispatch(profileActions.addSavedNews(news))
+            else console.log('no news was found')
+        }
+        dispatch(profileActions.setLoadingStatus(false))
     },
 
     deleteNews: (id: string): Thunk => async (dispatch) => {

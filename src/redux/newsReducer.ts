@@ -1,6 +1,7 @@
 import NewsAPI from "../api/news";
-import {INews, INews2} from "../model/INews";
+import {INews} from "../model/INews";
 import {BaseThunk, InferActionsTypes} from "./store";
+import {filterNews} from "../utils/news";
 
 enum ProfileTypes {
     SET_NEWS = './newsReducer/SET_NEWS',
@@ -19,14 +20,14 @@ export interface CurrentNewsData {
 }
 
 const initialState = {
-    newsArr: [] as INews2[],
-    searchNewsArr: [] as INews2[],
+    newsArr: [] as INews[],
+    searchNewsArr: [] as INews[],
     isSearching: false,
     isLoading: true,
     totalCount: 0,
     currentNewsData: {
         page: 1,
-        limit: 5
+        limit: 10
     } as CurrentNewsData
 }
 
@@ -37,24 +38,23 @@ const newsReducer = (state = initialState, action: NewsActions): InitialState =>
         case ProfileTypes.SET_NEWS: {
             return {...state, newsArr: action.data}
         }
-        case ProfileTypes.FILTER_NEWS: {
-            return {
-                ...state,
-                newsArr:
-                    [...state.newsArr].sort((a: any, b: any) => a[action.value].localeCompare(b[action.value]))
-            }
-        }
+        case ProfileTypes.FILTER_NEWS:
+            return {...state, newsArr: filterNews(action.value, [...state.newsArr])}
+
 
         case ProfileTypes.SEARCH_NEWS: {
             return {
                 ...state,
                 searchNewsArr:
-                    [...state.newsArr].filter((i: INews2) => i.title.toLowerCase().includes(action.value.toLowerCase()))
+                    [...state.newsArr].filter((i: INews) => i.title.toLowerCase().includes(action.value.toLowerCase()))
             }
         }
-        case ProfileTypes.SET_SEARCHING_STATUS: return {...state, isSearching: action.bool}
-        case ProfileTypes.SET_lOAD_STATUS: return {...state, isLoading: action.bool}
-        case ProfileTypes.SET_TOTAL_COUNT: return {...state, totalCount: action.num}
+        case ProfileTypes.SET_SEARCHING_STATUS:
+            return {...state, isSearching: action.bool}
+        case ProfileTypes.SET_lOAD_STATUS:
+            return {...state, isLoading: action.bool}
+        case ProfileTypes.SET_TOTAL_COUNT:
+            return {...state, totalCount: action.num}
 
         case ProfileTypes.SET_CURRENT_NEWS_DATA_PAGE: {
             return {
@@ -68,12 +68,13 @@ const newsReducer = (state = initialState, action: NewsActions): InitialState =>
                 currentNewsData: {...state.currentNewsData, limit: Number(action.limit)}
             }
         }
-        default: return state;
+        default:
+            return state;
     }
 }
 
 export const newsActions = {
-    setNews: (data: INews2[]) => ({type: ProfileTypes.SET_NEWS, data} as const),
+    setNews: (data: INews[]) => ({type: ProfileTypes.SET_NEWS, data} as const),
     filterNews: (value: string) => ({type: ProfileTypes.FILTER_NEWS, value} as const),
     searchNews: (value: string) => ({type: ProfileTypes.SEARCH_NEWS, value} as const),
     setSearchingStatus: (bool: boolean) => ({type: ProfileTypes.SET_SEARCHING_STATUS, bool} as const),
@@ -84,9 +85,9 @@ export const newsActions = {
 }
 
 export const newsThunk = {
-    fetchNews: (page: number, limit: number): Thunk => async (dispatch) => {
+    fetchNews: (page: number, limit: number, type: 'topstories' | 'newstories' = 'topstories'): Thunk => async (dispatch) => {
         dispatch(newsActions.setLoadStatus(true));
-        const data = await NewsAPI.getNews(page, limit);
+        const data = await NewsAPI.getNews(page, limit, type);
         dispatch(newsActions.setNews(data.items));
         dispatch(newsActions.setTotalCount(data.totalCount));
         dispatch(newsActions.setLoadStatus(false));

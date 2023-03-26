@@ -15,13 +15,13 @@ import {
     getSearchingStatus,
     getTotalCount
 } from "../selectors/selectors";
-import {INews, INews2} from "../model/INews";
+import {INews} from "../model/INews";
 import NewsHeader from "../components/NewsHeader/NewsHeader";
 import NewsItem from "../components/NewsList/NewsItem";
 
 interface IProps {
-    newsList: INews2[]
-    searchNewsArr: INews2[]
+    newsList: INews[]
+    searchNewsArr: INews[]
     isSearching: boolean
     isLoading: boolean
     currentNewsData: { limit: number, page: number }
@@ -32,6 +32,7 @@ interface IProps {
     setSearchingStatus: (bool: boolean) => void
     searchNews: (value: string) => void
     setCurrentNewsDataLimit: (limit: string) => void
+    headerName: string
 }
 
 const News: FC<IProps> = (props) => {
@@ -46,7 +47,7 @@ const News: FC<IProps> = (props) => {
     const [searchInp, setSearchInp, loadingSearch] = useSearch(searchNews);
     return (
         <div>
-            <NewsHeader title={'News'}/>
+            <NewsHeader title={props.headerName}/>
             <NewsForm searchInp={searchInp} setSearchInp={setSearchInp} {...props}/>
             {loadingSearch ? <NewsList newsList={searchNewsArr} ChildrenItem={NewsItem}/>
                 : <NewsList newsList={newsList} ChildrenItem={NewsItem}/>}
@@ -57,7 +58,12 @@ const News: FC<IProps> = (props) => {
     );
 };
 
-const NewsContainer: FC = () => {
+interface Props {
+    type: 'topstories' | 'newstories'
+    headerName: string
+}
+
+const NewsContainer: FC<Props> = ({type, headerName}) => {
     const newsList = useSelector(getNewsList)
     const searchNewsArr = useSelector(getSearchingNews)
     const isSearching = useSelector(getSearchingStatus)
@@ -68,12 +74,13 @@ const NewsContainer: FC = () => {
     const {newsThunk, newsActions} = useActions();
     useEffect(() => {
         (async function () {
-            await newsThunk.fetchNews(currentNewsData.page, currentNewsData.limit)
+            await newsThunk.fetchNews(currentNewsData.page, currentNewsData.limit, type)
         })()
-    }, [currentNewsData.page, currentNewsData.limit])
+    }, [currentNewsData.page, currentNewsData.limit, type])
 
     return isLoading ? <Preloader/> :
         <News
+            headerName={headerName}
             newsList={newsList}
             searchNewsArr={searchNewsArr}
             isSearching={isSearching}

@@ -2,14 +2,13 @@ import React, {FC, useContext, useState} from 'react';
 import s from "./News.module.scss"
 import NewsItemInfo from "./NewsItemInfo";
 import {useActions} from "../../hooks/useActions";
-import {INews, INews2} from "../../model/INews";
-import { ProfileContext } from '../../pages/Profile';
-import NewsAPI from "../../api/news";
+import {INews} from "../../model/INews";
+import {ProfileContext} from '../../pages/Profile';
 import profileAPI from "../../api/profle";
-import {ArrowClockwise, Bookmark, BookmarkFill} from "react-bootstrap-icons";
+import {ArrowClockwise, BookmarkFill} from "react-bootstrap-icons";
 
 
-const NewsProfileItem: FC<INews2> = (props) => {
+const NewsProfileItem: FC<INews> = (props) => {
     // const {profileThunk} = useActions();
     // const onDelete = (e: React.MouseEvent<HTMLElement>) => {
     //     e.preventDefault();
@@ -37,10 +36,10 @@ const NewsProfileItem: FC<INews2> = (props) => {
         <article className={s.item}>
             <NewsItemInfo {...props}/>
             <div className={s.item__newsStatusContainer}>
-            {
-                isNewsDeleting ? <div><ArrowClockwise className={s.loading}/></div>
+                {
+                    isNewsDeleting ? <div><ArrowClockwise className={s.loading}/></div>
                         : <div onClick={() => deleteNews(props.id)}><BookmarkFill className={s.savedText}/></div>
-            }
+                }
             </div>
             {/*<button className={s.sendButton} onClick={() => onDeleteFromState(props.id)}>delete</button>*/}
         </article>

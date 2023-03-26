@@ -22,7 +22,7 @@ export const calculatePaginationIndex = (page: number, limit: number, length: nu
 }
 
 export const getMainPartUrl = (url: string) => {
-    const temp = url.split('/')[2];
+    let temp = url.split('/')[2];
     return temp.includes('www.') ? temp.split('www.')[1] : temp;
 }
 

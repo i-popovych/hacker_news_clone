@@ -8,20 +8,21 @@ import SavedNewsForm from "../components/SavedNewsForm/SavedNewsForm";
 import {calculatePaginationIndex, sortByStr} from "../utils/utils";
 import {AppState} from "../redux/store";
 import NewsProfileItem from "../components/NewsList/NewsProfileItem";
-import {INews2} from "../model/INews";
+import {INews} from "../model/INews";
 import NewsAPI from "../api/news";
 import Search from "../components/Search/Search";
 import news from "../api/news";
 import profileAPI from "../api/profle";
 import {useActions} from "../hooks/useActions";
+import Preloader from "../common/Preloader/Preloader";
 
-const onSearch = (arr: INews2[], callback: any) => (searchInp: string) => {
+const onSearch = (arr: INews[], callback: any) => (searchInp: string) => {
     const res = arr.filter(i => i.title.toLowerCase().includes(searchInp.toLowerCase()));
     callback(res)
 }
 
 const onDeleteFromState =
-    (arr: INews2[], updateNews: Dispatch<INews2[]>) => (id: string) =>  {
+    (arr: INews[], updateNews: Dispatch<INews[]>) => (id: string) =>  {
     const newsArr = arr.filter(i => i.id !== id)
     updateNews(newsArr)
 }
@@ -29,10 +30,10 @@ const onDeleteFromState =
 export const ProfileContext = createContext(null as any)
 
 const Profile = () => {
-    const {profileActions} = useActions()
-    let [newsList, setNewsList] = useState([] as INews2[])
-    let [newsSearchedList, setNewsSearchedList] = useState([] as INews2[]);
+    let [newsList, setNewsList] = useState([] as INews[])
+    let [newsSearchedList, setNewsSearchedList] = useState([] as INews[]);
     const [searchInp, setSearchInp] = useSearch(onSearch(newsList, setNewsSearchedList));
+    const [isLoading, setIsLoading] = useState(true);
     //
     // const [totalNews, setTotalNews] = useState(null as number | null)
     // const [page, setPage] = useState('1');
@@ -64,24 +65,22 @@ const Profile = () => {
 
     useEffect(() => {
         const getNews = async () => {
+            setIsLoading(true)
             let result = await Promise.all(newsListIds.map(async (i, index) => {
                 return await NewsAPI.getItem(Number(i))
             }))
 
             if(result.filter(Boolean).length) setNewsList(result)
+            setIsLoading(false)
         }
         getNews()
     }, [])
-
-    useEffect(() => {
-        console.log(searchInp)
-    }, [searchInp])
 
     // useMemo(() => {
     //     if (filter) newsList = sortByStr(newsList, filter);
     // }, [filter])
 
-
+    if (isLoading) return <Preloader/>
     return (
         <ProfileContext.Provider value={onDeleteFromState(newsList, setNewsList)}>
             <div>

@@ -7,7 +7,8 @@ const SelectFilter: FC<{filterNews: (value: string) => void}> = ({filterNews}) =
     return (
         <MySelect value={pressedSelect} description={"enter whatever"} selectChange={setPressedSelect}
                   options={[
-                      {value: '_id', name: 'filter by id'},
+                      {value: 'index', name: 'filter by index'},
+                      {value: 'score', name: 'filter by scope'},
                       {value: 'title', name: 'filter by title'},
                   ]}/>
     );

@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
-import {INews2} from '../../model/INews';
+import {INews} from '../../model/INews';
 import s from "./News.module.scss";
 import {ChatLeft, ClockFill, PersonFill, Triangle, Window} from "react-bootstrap-icons";
 import {getDateFromMill, getMainPartUrl} from '../../utils/utils';
 
 
-const NewsItemInfo: FC<INews2> = ({
+const NewsItemInfo: FC<INews> = ({
                                       title, score, by,
                                       descendants, url, index, time
                                   }) => {

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {INews, INews2} from "../model/INews";
+import {INews} from "../model/INews";
 import {calculatePaginationIndex} from "../utils/utils";
 
 export const instanse = axios.create({
@@ -10,14 +10,15 @@ export const hn = axios.create({
     baseURL: 'https://hacker-news.firebaseio.com/v0/'
 })
 
+
 interface newsList {
-    items: INews2[],
+    items: INews[],
     totalCount: number
 }
 
 const NewsAPI = {
     //todo typing it
-    getAllNewsIds: async (type: string) => {
+    getAllNewsIds: async (type: 'topstories' | 'newstories') => {
         const res = await hn.get<number[]>(`${type}.json`, {
             params: {
                 print: 'pretty'
@@ -25,16 +26,17 @@ const NewsAPI = {
         });
         return res.data;
     },
-    getNews: async (page: number = 1, limit: number = 10, type: string = 'topstories', totalCount = 100): Promise<newsList> => {
-        let newsIdsArr: number[];
-        switch (type) {
-            case 'topstories':
-                newsIdsArr = await NewsAPI.getAllNewsIds(type);
-                break;
-        }
+    getNews: async (page: number = 1, limit: number = 10, type: 'topstories' | 'newstories' = 'topstories'): Promise<newsList> => {
+        let newsIdsArr: number[]  = await NewsAPI.getAllNewsIds(type);
+        const len = newsIdsArr.length
+        // switch (type) {
+        //     case 'topstories':
+        //         newsIdsArr = await NewsAPI.getAllNewsIds('topstories');
+        //         break;
+        // }
         let [a, b] = calculatePaginationIndex(page, limit, newsIdsArr!.length)
         newsIdsArr = newsIdsArr!.slice(a, b)
-        let res2: INews2[] = await Promise.all(
+        let res2: INews[] = await Promise.all(
             newsIdsArr!.map(async (i, index) => {
                 let temp = await NewsAPI.getItem(i)
                 temp.id = String(temp.id)
@@ -42,7 +44,7 @@ const NewsAPI = {
                 return temp;
             })
         )
-        return {items: res2, totalCount};
+        return {items: res2, totalCount: len};
 
 
         // const res = await instanse.get<newsList>('news', {
@@ -53,7 +55,7 @@ const NewsAPI = {
         // return res.data;
     },
     getItem: async (id: number) => {
-        const res = await hn.get<INews2>(`item/${id}.json`, {
+        const res = await hn.get<INews>(`item/${id}.json`, {
             params: {
                 print: 'pretty'
             }

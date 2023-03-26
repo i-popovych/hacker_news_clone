@@ -1,25 +1,23 @@
-import React, { FC } from 'react';
+import React, {FC, useMemo} from 'react';
 import s from "./News.module.scss"
-import NotFound from "../NotFound";
-import NewsProfileItem from "./NewsProfileItem";
-import NewsItem from "./NewsItem";
-import {INews, INews2} from '../../model/INews';
+import NoFound from "../NoFound";
+import {INews} from '../../model/INews';
 
 interface Props {
-    newsList: INews2[]
+    newsList: INews[]
     ChildrenItem: React.ElementType
 }
 
 const NewsList: FC<Props> = ({newsList, ChildrenItem,  ...props}) => {
-    if(!newsList.length && !newsList.filter(i => i === null).length) return <NotFound/>
-    //todo change location get method
-    // let site = window.location.href.split('/').at(-1)
-    // let Item = site === 'profile' ? NewsProfileItem : NewsItem
+    const news = useMemo(() => {
+        return newsList.filter(Boolean)
+    }, [newsList])
+    if(!news.length) return <NoFound/>
 
     return (
         <section className={s.newsList}>
             {
-                newsList.map(i => {
+                news.map(i => {
                     return <ChildrenItem key={i.id} {...i} {...props}/>
                 })
             }

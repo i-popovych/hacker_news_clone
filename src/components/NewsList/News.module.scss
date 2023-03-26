@@ -38,17 +38,23 @@
     .item__right {
       display: grid;
       justify-items: stretch;
-      grid-template-columns: 120px 180px 105px 45px;
+      grid-template-columns: 120px 150px 110px 45px;
     }
     .item__right, .item__left {
       align-items: center;
-      grid-column-gap: 15px;
+      grid-column-gap: 10px;
 
       > div {
+        &:hover {
+          overflow: visible;
+          z-index: 1;
+        }
+        overflow: hidden;
         display: flex;
         align-items: center;
-        column-gap: 6px;
+        column-gap: 5px;
         svg {
+            flex-shrink: 0;
             width: 15px;
             height: 15px;
         }
