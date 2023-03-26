@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import MySelect from "../../UI/MySelect";
+import MySelect from "../UI/MySelect";
 import {useLimit} from "../../hooks/form";
 
 interface Props {

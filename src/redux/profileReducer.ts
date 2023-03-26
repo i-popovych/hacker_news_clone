@@ -1,5 +1,5 @@
 import profileAPI from "../api/profle";
-import {INews} from "../model/INews";
+import {INews} from "../models/INews";
 import {savedNewsWithoutId} from "../utils/reducers";
 import {BaseThunk, InferActionsTypes} from "./store";
 import NewsAPI from "../api/news";

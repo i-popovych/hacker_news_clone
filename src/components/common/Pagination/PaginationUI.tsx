@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {usePageCount} from "../../hooks/usePageCount";
+import {usePageCount} from "../../../hooks/usePageCount";
 import {Pagination} from '@mui/material';
 
 interface Props {

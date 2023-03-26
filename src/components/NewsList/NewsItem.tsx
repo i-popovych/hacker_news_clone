@@ -5,7 +5,7 @@ import NewsItemInfo from "./NewsItemInfo";
 import {getSavedNewsId} from "../../selectors/profile";
 import {useClickLoading} from "../../hooks/useLoading";
 import {useActions} from "../../hooks/useActions";
-import {INews} from "../../model/INews";
+import {INews} from "../../models/INews";
 import {ArrowClockwise, Bookmark, BookmarkFill} from "react-bootstrap-icons";
 
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {INews} from "../model/INews";
+import {INews} from "../models/INews";
 import {calculatePaginationIndex} from "../utils/utils";
 
 export const localhost = axios.create({

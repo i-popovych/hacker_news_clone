@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import MySelect from "../../UI/MySelect";
+import MySelect from "../UI/MySelect";
 import {useSelect} from "../../hooks/form";
 
 const SelectFilter: FC<{filterNews: (value: string) => void}> = ({filterNews}) => {

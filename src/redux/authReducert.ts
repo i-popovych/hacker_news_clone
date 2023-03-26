@@ -1,7 +1,7 @@
 import authAPI from "../api/auth";
 import {AppState, BaseThunk, InferActionsTypes} from "./store";
 import {Dispatch} from "redux";
-import {IUserAuth} from "../model/user";
+import {IUserAuth} from "../models/user";
 
 enum AuthTypes {
     SET_CURRENT_USER = 'authReducer/SET_CURRENT_USER',

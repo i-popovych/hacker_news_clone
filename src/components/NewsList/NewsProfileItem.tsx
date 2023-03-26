@@ -2,7 +2,7 @@ import React, {FC, useContext, useState} from 'react';
 import s from "./News.module.scss"
 import NewsItemInfo from "./NewsItemInfo";
 import {useActions} from "../../hooks/useActions";
-import {INews} from "../../model/INews";
+import {INews} from "../../models/INews";
 import {ProfileContext} from '../../pages/Profile';
 import profileAPI from "../../api/profle";
 import {ArrowClockwise, BookmarkFill} from "react-bootstrap-icons";

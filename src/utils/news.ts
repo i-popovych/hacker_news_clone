@@ -1,4 +1,4 @@
-import {INews} from "../model/INews";
+import {INews} from "../models/INews";
 
 export const filterNews = (value: string, arr: INews[]): INews[] => {
     type NewsSortKey = 'score' | 'index';

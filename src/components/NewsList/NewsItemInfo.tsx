@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {INews} from '../../model/INews';
+import {INews} from '../../models/INews';
 import s from "./News.module.scss";
 import {ChatLeft, ClockFill, PersonFill, Triangle, Window} from "react-bootstrap-icons";
 import {getDateFromMill, getMainPartUrl} from '../../utils/utils';

@@ -1,7 +1,7 @@
 import React, {FC, useMemo} from 'react';
 import s from "./News.module.scss"
 import NoFound from "../NoFound";
-import {INews} from '../../model/INews';
+import {INews} from '../../models/INews';
 
 interface Props {
     newsList: INews[]

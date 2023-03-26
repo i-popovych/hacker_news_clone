@@ -4,10 +4,10 @@ import {getSavedNewsId} from "../selectors/profile";
 import NewsList from "../components/NewsList/NewsList";
 import {useSearch} from "../hooks/form";
 import NewsProfileItem from "../components/NewsList/NewsProfileItem";
-import {INews} from "../model/INews";
+import {INews} from "../models/INews";
 import NewsAPI from "../api/news";
 import Search from "../components/Search/Search";
-import Preloader from "../common/Preloader/Preloader";
+import Preloader from "../components/common/Preloader/Preloader";
 
 const onSearch = (arr: INews[], callback: any) => (searchInp: string) => {
     const res = arr.filter(i => i.title.toLowerCase().includes(searchInp.toLowerCase()));

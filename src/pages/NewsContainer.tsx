@@ -2,8 +2,8 @@ import React, {FC, useEffect} from 'react';
 
 import {useSelector} from "react-redux";
 import NewsList from "../components/NewsList/NewsList";
-import Preloader from "../common/Preloader/Preloader";
-import PaginationUI from "../common/Pagination/PaginationUI";
+import Preloader from "../components/common/Preloader/Preloader";
+import PaginationUI from "../components/common/Pagination/PaginationUI";
 import {useSearch} from "../hooks/form";
 import NewsForm from "../components/NewsForm/NewsForm";
 import {useActions} from "../hooks/useActions";
@@ -15,7 +15,7 @@ import {
     getSearchingStatus,
     getTotalCount
 } from "../selectors/selectors";
-import {INews} from "../model/INews";
+import {INews} from "../models/INews";
 import NewsHeader from "../components/NewsHeader/NewsHeader";
 import NewsItem from "../components/NewsList/NewsItem";
 

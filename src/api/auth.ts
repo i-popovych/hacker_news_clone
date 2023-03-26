@@ -1,5 +1,5 @@
 import {localhost} from "./news";
-import {IUserAuth} from "../model/user";
+import {IUserAuth} from "../models/user";
 
 export interface UserAuthData {
     token: string
