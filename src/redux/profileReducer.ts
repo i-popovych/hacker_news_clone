@@ -57,28 +57,28 @@ export const profileActions = {
 export const profileThunk = {
     addNews: (id: string): Thunk => async (dispatch) => {
         dispatch(profileActions.setLoadingStatus(true));
-        const res = await profileAPI.addNews(id);
-        if (res.status === 200) {
+        try {
+            await profileAPI.addNews(id);
             dispatch(profileActions.setSavedIdNews([id]))
             const news: INews = await NewsAPI.getItem(Number(id))
             if (news) dispatch(profileActions.addSavedNews(news))
             else console.log('no news was found')
+        } finally {
+            dispatch(profileActions.setLoadingStatus(false))
         }
-        dispatch(profileActions.setLoadingStatus(false))
     },
 
     deleteNews: (id: string): Thunk => async (dispatch) => {
         try {
-            const res = await profileAPI.deleteNews(id);
-            if (res.status === 200) {
-                dispatch(profileActions.deleteSavedNews(id));
-                dispatch(profileActions.deleteSavedNewsId(id))
-            }
+            await profileAPI.deleteNews(id);
+            dispatch(profileActions.deleteSavedNews(id));
+            dispatch(profileActions.deleteSavedNewsId(id))
+
         } catch (e) {
             console.log(e)
         }
     },
-    
+
     fetchSavedNewsIds: (): Thunk => async (dispatch) => {
         try {
             const ids = await profileAPI.getSavedNewsIds();
