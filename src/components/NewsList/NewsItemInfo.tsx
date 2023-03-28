@@ -7,7 +7,7 @@ import {getDateFromMill, getMainPartUrl} from '../../utils/utils';
 
 const NewsItemInfo: FC<INews> = ({
                                       title, score, by,
-                                      descendants, url, index, time
+                                      descendants, url, index, time, id
                                   }) => {
     return (
         <div className={s.item__info}>
@@ -17,7 +17,7 @@ const NewsItemInfo: FC<INews> = ({
                     <Triangle className={s.scope__img}/>
                     <span>{score}</span>
                 </div>
-                <div className={s.title}><a href={url}>{title}</a></div>
+                <div className={s.title}><a href={url || `https://news.ycombinator.com/item?id=${id}`}>{title}</a></div>
             </div>
             <div className={s.item__right}>
                 <div className={s.by}>
