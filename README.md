@@ -1,3 +1,13 @@
+# Description
+
+The Hacker News project is a modified front-end application 
+that allows users to browse and interact with news content from the popular 
+Hacker News website. Powered by the [Hacker News API](https://github.com/HackerNews/API), the application provides users 
+with access to the latest news stories, along with search and filtering capabilities.
+
+In addition to its robust front-end features, the Hacker News project is also backed by a custom server, 
+the [Hacker News Server](https://github.com/i-popovych/hacker_news_server), which provides secure authentication and authorization services via JWT tokens. 
+With the Hacker News Server, users can create accounts, log in, and access the news they have previously saved.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
