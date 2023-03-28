@@ -16,7 +16,7 @@ const onSearch = (arr: INews[], callback: any) => (searchInp: string) => {
 
 const onDeleteFromState =
     (arr: INews[], updateNews: Dispatch<INews[]>) => (id: string) =>  {
-    const newsArr = arr.filter(i => i.id !== id)
+    const newsArr = arr.filter(Boolean).filter(i => i.id !== id)
     updateNews(newsArr)
 }
 
