@@ -8,6 +8,17 @@ with access to the latest news stories, along with search and filtering capabili
 In addition to its robust front-end features, the Hacker News project is also backed by a custom server, 
 the [Hacker News Server](https://github.com/i-popovych/hacker_news_server), which provides secure authentication and authorization services via JWT tokens. 
 With the Hacker News Server, users can create accounts, log in, and access the news they have previously saved.
+
+# Some screenshots of the project
+### News page
+![img.png](src/assets/img.png)
+
+### User saved news
+![img.png](src/assets/saved_news.png)
+
+### Authorization page
+![img.png](src/assets/auth_page.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
